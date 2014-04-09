@@ -1,4 +1,4 @@
-require_relative '../models/abstract_user'
+require_relative '../models/user_mapper'
 require 'json'
 
 class Scarecrow < Sinatra::Application
@@ -8,13 +8,13 @@ class Scarecrow < Sinatra::Application
     response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
   end
 
-  post '/signup' do
+  post '/auth/signup' do
     params = deep_symbolize JSON.parse(request.body.read)
     puts params
-    existing_user = User.get({ :email => params[:user][:email]})
+    existing_user = UserMapper.get({ :email => params[:user][:email]})
     unless existing_user
       puts "no existing user"
-      @user = User.set(params[:user])
+      @user = UserMapper.set(params[:user])
       if @user.valid && @user.id
         content_type :json
         { :message => "USER_ACCOUNT_CREATION_SUCCESS" }.to_json
@@ -31,17 +31,31 @@ class Scarecrow < Sinatra::Application
     end
   end
 
-  post '/login/?' do
+  post '/auth/login/?' do
     params = deep_symbolize JSON.parse(request.body.read)
     puts params
-    if user = User.authenticate(params[:email], params[:password])
+    if session = UserMapper.authenticate(params[:email], params[:password])
       # TODO(pile) store login info in session 
       content_type :json
-      { :message => "LOGIN_SUCCESS"}.to_json
+      {
+        :token => session.token, 
+        :message => "LOGIN_SUCCESS"
+      }.to_json
     else
       status 400
       content_type :json
       { :message => "LOGIN_FAIL" }.to_json
+    end
+  end
+
+  post '/auth/logout' do
+    params = deep_symbolize JSON.parse(request.body.read)
+    content_type:json
+    if UserMapper.logout(params[:email], params[:token])
+      { :message => "LOGOUT_SUCCESS"}.to_json
+    else
+      status 400
+      { :message => "LOGOUT_FAIL"}.to_json
     end
   end
 

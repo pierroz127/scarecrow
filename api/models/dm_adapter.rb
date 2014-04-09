@@ -7,12 +7,12 @@ module DmAdapter
   module ClassMethods
     #pass all args to this
     def all
-      result = DmUser.all(:order => [:created_at.desc])
+      result = User.all(:order => [:created_at.desc])
       result.collect {|instance| self.new instance}
     end
 
     def get(hash)
-      if user = DmUser.first(hash)
+      if user = User.first(hash)
         self.new user
       else
         nil
@@ -22,19 +22,19 @@ module DmAdapter
     def set(attributes)
       puts "User.set: "
       puts attributes
-      user = DmUser.new attributes
+      user = User.new attributes
       user.save
       self.new user
     end
 
     def set!(attributes)
-      user = DmUser.new attributes
+      user = User.new attributes
       user.save!
       self.new user
     end
 
     def delete(pk)
-      user = DmUser.first(:id => pk)
+      user = User.first(:id => pk)
       user.destroy
     end
   end

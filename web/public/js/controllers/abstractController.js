@@ -1,1 +1,1 @@
-angular.module('scarecrow.controllers', ['ui.bootstrap']);
+angular.module('scarecrow.controllers', ['ui.bootstrap', 'ngCookies']);

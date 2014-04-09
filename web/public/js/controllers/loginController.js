@@ -1,5 +1,8 @@
+// TODO(pile) make it configurable
+var apiUri = 'http://localhost:8585';
+
 angular.module('scarecrow.controllers')
-  .controller('LoginCtrl', ['$scope', '$modal', '$http', '$log', function($scope, $modal, $http, $log) {
+  .controller('LoginCtrl', ['$scope', '$modal', '$http', '$log', '$cookieStore', function($scope, $modal, $http, $log, $cookieStore) {
 
     var reset = function () {
         $scope.user = { 'email' : ''};
@@ -16,7 +19,8 @@ angular.module('scarecrow.controllers')
           templateUrl: '/views/login.html',
           controller: loginInstanceCtrl,
           resolve: {
-            http : function() { return $http; }
+            http: function() { return $http; },
+            cookieStore: function() { return $cookieStore; }
           }
         });
 
@@ -29,7 +33,7 @@ angular.module('scarecrow.controllers')
         });
     };
 
-    $scope.signin = function () {
+    /*$scope.signin = function () {
         $scope.isModal = true;
         var modalInstance = $modal.open({
             templateUrl : '/views/signin.html',
@@ -37,7 +41,7 @@ angular.module('scarecrow.controllers')
         });
 
         modalInstance.result.then(function (result) {
-            $http.post('http://localhost:8585/signup', { "user": result })
+            $http.post(apiUri + '/auth/signup', { "user": result })
                  .success(function(data, status) {
                     console.log('signup succeeded');
                  })
@@ -45,13 +49,21 @@ angular.module('scarecrow.controllers')
                     console.log('signup failed: ' + data.message);
                  });
         }, function() {
-            /* dismiss modal window */
+            // dismiss modal window 
             $scope.isModal = false;
         })
-    };
+    };*/
 
     $scope.logout = function() {
-        reset();
+      var token = $cookieStore.get('token');
+      $http.post(apiUri + '/auth/logout', {"email": $scope.user.email, "token": token})
+        .success(function(data, status) {
+          reset();
+          $cookieStore.remove('token');
+        })
+        .error(function(data, status) {
+          console.log(data.message);
+        })
     }
 
 }]);
@@ -59,16 +71,17 @@ angular.module('scarecrow.controllers')
 // Please note that $modalInstance represents a modal window (instance) dependency.
 // It is not the same as the $modal service used above.
 
-var loginInstanceCtrl = function($scope, $modalInstance, http) {
+var loginInstanceCtrl = function($scope, $modalInstance, http, cookieStore) {
   $scope.login = function () {
     var user = {
       email : $scope.myEmail,
       password : $scope.myPassword
     }
     console.log("trying to log " + JSON.stringify(user));
-    http.post('http://localhost:8585/login/?', user)
+    http.post(apiUri + '/auth/login/?', user)
         .success(function(data, status) {
-          // connection successful
+          console.log("token: " + data.token);
+          cookieStore.put('token', data.token);
           $modalInstance.close(user.email);
         })
         .error(function(data, status) {
@@ -82,7 +95,7 @@ var loginInstanceCtrl = function($scope, $modalInstance, http) {
   };
 };
 
-var signinInstanceCtrl = function ($scope, $modalInstance) {
+/*var signinInstanceCtrl = function ($scope, $modalInstance) {
   $scope.signup = function() {
     $modalInstance.close({ 
         "email": $scope.email,
@@ -91,4 +104,4 @@ var signinInstanceCtrl = function ($scope, $modalInstance) {
         "password": $scope.password
     });
   }
-};
+};*/

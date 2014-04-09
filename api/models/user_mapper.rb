@@ -2,12 +2,11 @@ current_path = File.expand_path("..", __FILE__)
 #require 'dm-core'
 require 'dm-timestamps'
 require 'dm-validations'
-#require File.join(current_path, 'datamapper_user')
-#require File.join(current_path, 'dm_adapter')
-require_relative 'dm_user'
+require_relative 'user'
+require_relative 'session'
 require_relative 'dm_adapter'
 
-class User
+class UserMapper
   include DmAdapter
 
   def initialize(interfacing_class_instance)
@@ -19,10 +18,27 @@ class User
   end
 
   def self.authenticate(email, pass)
-    current_user = get(:email => email)
+    current_user = User.first(:email => email)
     return nil if current_user.nil?
-    return current_user if User.encrypt(pass, current_user.salt) == current_user.hashed_password
-    nil
+    #return current_user if UserAdapter.encrypt(pass, current_user.salt) == current_user.hashed_password
+    if UserMapper.encrypt(pass, current_user.salt) == current_user.hashed_password
+      session = current_user.sessions.new
+      session.save
+      session
+    else
+      nil
+    end
+  end
+
+  def self.logout(email, token)
+    current_user = User.first(:email => email)
+    return nil if current_user.nil?
+    session = current_user.sessions.find { |s| s.token == token }
+    if session
+      session.destroy
+    else
+      nil
+    end
   end
 
   def db_instance
