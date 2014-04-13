@@ -1,0 +1,187 @@
+<div class="container">
+  <legend>Inscription</legend>
+  <form class="form-horizontal" role="form">
+    <fieldset>
+      <div class="row">
+        <div class="form-group col-lg-6 no-margin">
+          
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-email">Email</label>
+              <div class="controls">
+                <input id="input-email" class="col-lg-10" type="email" ng-model="user.email" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-passwd">Mot de passe</label>
+              <div class="controls">
+                <input id="input-passwd" class="col-lg-10" type="password" ng-model="user.password" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-passwd">Confirmation de votre mot de passe</label>
+              <div class="controls">
+                <input id="input-passwd" class="col-lg-10" type="password" ng-model="user.passwordConfirmation" required>
+              </div>
+            </div>
+          </div>
+         
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-name">Nom</label>
+              <div class="controls">
+                <input type="text" class="col-lg-10" id="input-name" ng-model="user.lastname" placeholder="Doe" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-firstname">Pr&eacute;nom</label>
+              <div class="controls">
+                <input type="text" class="col-lg-10" id="input-firstname" ng-model="user.firstname" placeholder="John" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-address1">Addresse</label>
+              <div class="controls">
+                <input type="text" class="col-lg-10" id="input-address1" ng-model="user.address1" placeholder="numéro rue, avenue, boulevard" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group" style="margin-top: 7px;">
+            <div class="col-lg-12">
+              <div class="controls">
+                <input type="text" class="col-lg-10" id="input-address2" ng-model="user.address2" placeholder="batiment, étage">
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-zipcode">Code postal</label>
+              <div class="controls">
+                <input type="text" class="col-lg-10" id="input-zipcode" ng-model="user.zipcode" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-city">Ville</label>
+              <div class="controls">
+                <input type="text" class="col-lg-10" id="input-city" ng-model="user.city" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row control-group">
+            <div class="col-lg-12">
+              <label class="control-label" for="input-city">Téléphone</label>
+              <div class="controls">
+                <input type="tel" class="col-lg-10" id="input-city" ng-model="user.phone">
+              </div>
+            </div>
+          </div>
+
+        </div> <!--end of <div class="form-group col-lg-6 no-margin">-->
+
+        <div class="form-group col-lg-6 no-margin">
+          
+          <accordion close-others="true"> 
+            <accordion-group ng-repeat="child in user.children track by $index" is-open="true">
+              <accordion-heading>
+                {{child.heading}}
+                <button type="button" class="close" ng-click="removeChild($index)">x</button>
+              </accordion-heading>
+              <div class="row control-group">
+                <div class="col-lg-12">
+                  <label class="control-label">Nom</label>
+                  <div class="controls">
+                    <input type="text" class="col-lg-11" ng-model="child.lastname">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row control-group">
+                <div class="col-lg-12">
+                  <label class="control-label">Pr&eacute;nom</label>
+                  <div class="controls">
+                    <input type="text" class="col-lg-11" ng-model="child.firstname">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row control-group">
+                <div class="col-lg-12">
+                  <label class="control-label">Date de Naissance</label>
+                  <div class="row">
+                    <div class="controls col-lg-2">
+                      <input type="number" min="1" max="31" ng-model="child.birthdate.day" placeholder="JJ" />
+                    </div> 
+                    <div class="controls col-lg-1">/</div> 
+                    <div class="controls col-lg-2">
+                      <input type="number" min="1" max="12" ng-model="child.birthdate.month" placeholder="MM"/>
+                    </div>
+                    <div class="controls col-lg-1">/</div> 
+                    <div class="controls col-lg-2 ">
+                      <input type="number" min="1990" max="{{maxYear}}" ng-model="child.birthdate.year" placeholder="YYYY" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row control-group">
+                <div class="col-lg-12">
+                  <label class="control-label">Num&eacute;ro de S&eacute;curit&eacute; sociale</label>
+                  <div class="controls">
+                    <input type="text" class="col-lg-11" ng-model="child.socialSecurityNbr"/>
+                  </div>
+                </div>
+              </div>
+              <div class="row control-group">
+                <div class="col-lg-12">
+                  <label class="control-label">Allergies</label>
+                  <div class="controls">
+                    <textarea class="col-lg-11" rows=2 ng-model="child.allergys"/>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+          </accordion>
+          <div class="row alert alert-danger" style="margin-top:15px;" ng-show="!allChildrenValid">
+            <p><strong>Erreur !&nbsp;</strong></p>
+            <p>{{lastChild.firstname}}, {{lastChild.lastname}}, {{lastChild.birthdate.day}}/{{lastChild.birthdate.month}}/{{lastChild.birthdate.year}}, {{lastChild.socialSecurityNbr}}</p>
+            <p>Les informations sur votre enfant sont incompl&egrave;tes </p>
+          </div>
+
+          <div class="row control-group">
+            <a class="btn btn-primary btn-sm" style="float: right; margin-top:15px;" role="button" ng-click="addChild()">Ajouter un enfant</a>
+          </div>
+        </div> <!-- end of <div class="form-group col-lg-6 no-margin"> -->
+      </div> <!-- end of div.row -->
+    
+    </fieldset>
+    
+    <div class="row">
+      <div class="form-group col-lg-12 no-margin">
+        <div class="control-group">
+          <label class="control-label"></label>
+          <div class="controls">
+            <button class="btn btn-primary" ng-click="signup()">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

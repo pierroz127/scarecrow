@@ -20,10 +20,31 @@ module DmAdapter
     end
 
     def set(attributes)
+
+      children = attributes[:children]
+      attributes.select! do 
+        |k, v| 
+        User.fields.find_index do
+          |property|
+          property == k
+        end
+      end
       puts "User.set: "
       puts attributes
+
       user = User.new attributes
       user.save
+
+      if children
+        puts "let's add the children"
+        children.each do
+          |child_attributes|
+          child = Child.create child_attributes
+          user.childs << child
+        end 
+        user.save
+      end
+
       self.new user
     end
 

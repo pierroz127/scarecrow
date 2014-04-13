@@ -5,11 +5,12 @@ angular.module('scarecrow', [
   'ngCookies',
   'ui.bootstrap', 
   'ui.date', 
-  'scarecrow.controllers'])
+  'scarecrow.controllers',
+  'scarecrow.common.services'])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/signup', {
-        templateUrl: 'views/signin.html',
+        templateUrl: 'views/signup.html',
         controller: 'SignupCtrl'
       })
       .when('/', {

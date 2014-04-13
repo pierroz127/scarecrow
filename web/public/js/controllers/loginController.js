@@ -94,14 +94,3 @@ var loginInstanceCtrl = function($scope, $modalInstance, http, cookieStore) {
     $modalInstance.dismiss('cancel');
   };
 };
-
-/*var signinInstanceCtrl = function ($scope, $modalInstance) {
-  $scope.signup = function() {
-    $modalInstance.close({ 
-        "email": $scope.email,
-        "firstname": $scope.firstname,
-        "lastname": $scope.lastname,
-        "password": $scope.password
-    });
-  }
-};*/
