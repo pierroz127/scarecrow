@@ -4,21 +4,32 @@ angular.module('scarecrow.controllers')
   .controller('SignupCtrl', ['$scope', '$http', '$location', '$log', 'Child', function($scope, $http, $location, $log, Child) {
     var d = new Date();
     $scope.maxYear = d.getFullYear();
+
     $scope.allChildrenValid = true;
 
     $scope.user = {
       'children' : []
     };
 
+    $scope.STATUS_ENUM = {
+      'inprogress' : 1,
+      'success': 2,
+      'fail': 3
+    }
+    $scope.status = $scope.STATUS_ENUM.inprogress; 
+
+    $scope.errorMessage = "";
 
     $scope.signup = function () {
       $http.post(apiUri + '/auth/signup', { "user": $scope.user })
            .success(function(data, status) {
               console.log('signup succeeded');
-              $location.path('/');
-           })
+              $scope.status = $scope.STATUS_ENUM.success;
+             })
            .error(function(data, status) {
               console.log('signup failed: ' + data.message);
+              $scope.status = $scope.STATUS_ENUM.fail;
+              $scope.errorMessage = data.message;
            });
        
     };

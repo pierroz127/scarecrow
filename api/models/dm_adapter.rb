@@ -40,7 +40,7 @@ module DmAdapter
         children.each do
           |child_attributes|
           child = Child.create child_attributes
-          user.childs << child
+          user.children << child
         end 
         user.save
       end

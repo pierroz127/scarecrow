@@ -3,6 +3,7 @@ require 'data_mapper'
 require 'dm-migrations'
 require_relative '../models/user_mapper'
 require_relative '../models/session'
+require_relative '../models/child'
 describe "user mapper" do 
   before(:all) do
     puts "coucou it's before"
@@ -78,9 +79,9 @@ describe "user mapper" do
 
     retrieved_user = User.first({:email => "user_03@scarecrow.com"})
     expect(retrieved_user).to be_true
-    expect(retrieved_user.childs).to be_true
-    retrieved_user.childs.length.should eq(1)
-    retrieved_user.childs[0].firstname.should eq("junior")
+    expect(retrieved_user.children).to be_true
+    retrieved_user.children.length.should eq(1)
+    retrieved_user.children[0].firstname.should eq("junior")
   end
 
   #TODO(pile) so many other tests to write... 
