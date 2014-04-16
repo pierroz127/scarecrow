@@ -41,6 +41,10 @@ class UserMapper
     end
   end
 
+  def self.exists(email, pseudo)
+    return (User.all(:email => email) + User.all(:pseudo => pseudo)).length > 0
+  end
+
   def db_instance
     @instance
   end

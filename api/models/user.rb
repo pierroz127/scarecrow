@@ -4,6 +4,7 @@ class User
   include DataMapper::Resource
 
   property :id,              Serial
+  property :pseudo,          String,   :required => true
   property :email,           String,   :required => true
   property :firstname,       String,   :required => true
   property :lastname,        String,   :required => true

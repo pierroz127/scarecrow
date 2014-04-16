@@ -11,7 +11,7 @@ class Scarecrow < Sinatra::Application
   post '/auth/signup' do
     params = deep_symbolize JSON.parse(request.body.read)
     puts params
-    existing_user = UserMapper.get({ :email => params[:user][:email]})
+    existing_user = UserMapper.exists(params[:user][:email], params[:user][:pseudo])
     unless existing_user
       puts "no existing user"
       @user = UserMapper.set(params[:user])

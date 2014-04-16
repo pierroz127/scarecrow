@@ -17,6 +17,7 @@ describe "user mapper" do
 
   it "can create a user" do
     user = UserMapper.set( {
+      :pseudo => "user_01",
       :email => "user_01@scarecrow.com", 
       :password => "1234", 
       :created_at => Time.now,
@@ -54,10 +55,22 @@ describe "user mapper" do
 
     # new_user nil because lastname is missing
     expect(new_user).to be_false
+
+    user = UserMapper.set( {
+      :email => "user_01@scarecrow.com", 
+      :password => "1234", 
+      :created_at => Time.now,
+      :firstname => "john",
+      :lastname => "doe"
+    })
+    new_user = user.save
+    #new user is nil because pseudo was missing
+    expect(new_user).to be_false
   end
 
   it "create user with children" do
     user = UserMapper.set({
+      :pseudo => "user_03",
       :email => "user_03@scarecrow.com", 
       :password => "1234", 
       :created_at => Time.now,
@@ -93,6 +106,7 @@ describe "user mapper" do
 
   it "user with wrong password can't authenticate" do
     user = UserMapper.set( {
+      :pseudo => "user_04",
       :email => "user_04@scarecrow.com", 
       :password => "1234", 
       :created_at => Time.now,
@@ -105,6 +119,7 @@ describe "user mapper" do
 
   it "user can authenticate and create a session" do
     user = UserMapper.set( {
+      :pseudo => "user_05",
       :email => "user_05@scarecrow.com", 
       :password => "1234", 
       :created_at => Time.now,
@@ -122,6 +137,7 @@ describe "user mapper" do
 
   it "user can log out" do
     user = UserMapper.set( {
+      :pseudo => "user_07",
       :email => "user_06@scarecrow.com", 
       :password => "1234", 
       :created_at => Time.now,
@@ -133,6 +149,22 @@ describe "user mapper" do
     expect(session.token).to be_true
 
     expect(UserMapper.logout("user_06@scarecrow.com", session.token)).to be_true
+  end
+
+  it "check that a user really exists" do
+    user = UserMapper.set( {
+      :pseudo => "user_07",
+      :email => "user_07@scarecrow.com", 
+      :password => "1234", 
+      :created_at => Time.now,
+      :firstname => "john",
+      :lastname => "doe"
+    })
+    expect(UserMapper.exists("user_07@scarecrow.com", "xyz")).to be_true
+    expect(UserMapper.exists("xyz@scarecrow.com", "user_07")).to be_true
+    expect(UserMapper.exists("xyz@scarecrow.com", "xyz")).to be_false
+
+
   end
 
 end

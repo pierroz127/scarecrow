@@ -1,83 +1,68 @@
 <div class="container">
   <legend>Inscription</legend>
-  <form class="form-horizontal" role="form" ng-show="status != STATUS_ENUM.success">
+  {{test}}
+  <form name="signup_form" class="form-horizontal" role="form" ng-show="!statusIsSuccess()">
     <fieldset>
       <div class="row">
         <div class="col-lg-6 no-margin">
-          
           <div class="row form-group">
             <div class="col-lg-12">
-              <label for="input-email">Email</label>
-              <input id="input-email" class="form-control col-lg-10" type="email" ng-model="user.email" required>
+              <label for="input-pseudo">Votre identifiant</label>
+              <input id="input-pseudo" name="pseudo" class="form-control col-lg-10" type="text" ng-model="user.pseudo" required>
+              <div class="alert-danger alert-link" ng-show="signup_form.pseudo.$dirty && signup_form.pseudo.$invalid">
+                <small ng-show="signup_form.pseudo.$error.required">Votre pseudo est requis</small>
+              </div>
             </div>
           </div>
-
+        </div>
+        <div class="col-lg-6 no-margin">
           <div class="row form-group">
+            <div class="col-lg-12">
+              <label for="input-passwd">Nom</label>
+              <input id="input-passwd" class="form-control col-lg-10" type="text" ng-model="user.lastname" placeholder="Doe" required>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 no-margin">
+          <div class="row form-group" ng-show="modeIsSignUp()">
             <div class="col-lg-12">
               <label for="input-passwd">Mot de passe</label>
               <input id="input-passwd" class="form-control col-lg-10" type="password" ng-model="user.password" required>
             </div>
           </div>
-
-          <div class="row form-group">
-            <div class="col-lg-12">
-              <label for="input-passwd">Confirmation de votre mot de passe</label>
-              <input id="input-passwd" class="form-control col-lg-10" type="password" ng-model="user.passwordConfirmation" required>
-            </div>
-          </div>
-         
-          <div class="row form-group">
-            <div class="col-lg-12">
-              <label for="input-name">Nom</label>
-              <input type="text" class="form-control col-lg-10" id="input-name" ng-model="user.lastname" placeholder="Doe" required>
-            </div>
-          </div>
-
+        </div>
+        <div class="col-lg-6 no-margin">
           <div class="row form-group">
             <div class="col-lg-12">
               <label for="input-firstname">Pr&eacute;nom</label>
               <input type="text" class="form-control col-lg-10" id="input-firstname" ng-model="user.firstname" placeholder="John" required>
             </div>
           </div>
-
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 no-margin">
+          <div class="row form-group" ng-show="modeIsSignUp()">
+            <div class="col-lg-12">
+              <label for="nput-password-conf">Confirmez votre mot de passe</label>
+              <input type="password" class="form-control col-lg-10" id="input-password-conf" ng-model="user.passwordConfirmation" required>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 no-margin">
           <div class="row form-group">
             <div class="col-lg-12">
-              <label for="input-address1">Addresse</label>
-              <input type="text" class="form-control col-lg-10" id="input-address1" ng-model="user.address1" placeholder="numéro rue, avenue, boulevard" required>
+              <label for="input-email">Email</label>
+              <input type="text" class="form-control col-lg-10" id="input-email" ng-model="user.email" placeholder="john@doe.com" required>
             </div>
           </div>
-
-          <div class="row form-group" style="margin-top: 7px;">
-            <div class="col-lg-12">
-              <input type="text" class="form-control col-lg-10" id="input-address2" ng-model="user.address2" placeholder="batiment, étage">
-            </div>
-          </div>
-
-          <div class="row form-group">
-            <div class="col-lg-12">
-              <label for="input-zipcode">Code postal</label>
-              <input type="text" class="form-control col-lg-10" id="input-zipcode" ng-model="user.zipcode" required>
-            </div>
-          </div>
-
-          <div class="row form-group">
-            <div class="col-lg-12">
-              <label for="input-city">Ville</label>
-              <input type="text" class="form-control col-lg-10" id="input-city" ng-model="user.city" required>
-            </div>
-          </div>
-
-          <div class="row form-group">
-            <div class="col-lg-12">
-              <label for="input-city">Téléphone</label>
-              <input type="tel" class="form-control col-lg-10" id="input-city" ng-model="user.phone">
-            </div>
-          </div>
-
-        </div> <!--end of <div class="form-group col-lg-6 no-margin">-->
-
-        <div class="form-group col-lg-6 no-margin">
-          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 no-margin">
+          <legend>Enfants</legend>
           <accordion close-others="true"> 
             <accordion-group ng-repeat="child in user.children track by $index" is-open="true">
               <accordion-heading>
@@ -137,29 +122,64 @@
             <p>Les informations sur votre enfant sont incompl&egrave;tes </p>
           </div>
 
-          <div class="row control-group">
-            <a class="btn btn-primary btn-sm" style="float: right; margin-top:15px;" role="button" ng-click="addChild()">Ajouter un enfant</a>
+          <div class="row">
+            <a  style="margin:15px;" ng-click="addChild()">Ajouter un enfant</a>
           </div>
         </div> <!-- end of <div class="form-group col-lg-6 no-margin"> -->
+
+        <div class="col-lg-6 no-margin">
+        
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label for="input-address1">Addresse</label>
+              <input type="text" class="form-control col-lg-10" id="input-address1" ng-model="user.address1" placeholder="numéro rue, avenue, boulevard" required>
+            </div>
+          </div>
+        
+          <div class="row form-group" style="margin-top: 7px;">
+            <div class="col-lg-12">
+              <input type="text" class="form-control col-lg-10" id="input-address2" ng-model="user.address2" placeholder="batiment, étage">
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label for="input-zipcode">Code postal</label>
+              <input type="text" class="form-control col-lg-10" id="input-zipcode" ng-model="user.zipcode" required>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label for="input-city">Ville</label>
+              <input type="text" class="form-control col-lg-10" id="input-city" ng-model="user.city" required>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-lg-12">
+              <label for="input-city">Téléphone</label>
+              <input type="tel" class="form-control col-lg-10" id="input-city" ng-model="user.phone">
+            </div>
+          </div>
+
+        </div> <!--end of <div class="form-group col-lg-6 no-margin">-->
+
+        
       </div> <!-- end of div.row -->
     
     </fieldset>
     
     <div class="row">
-      <div class="form-group col-lg-12 no-margin">
-        <div class="control-group">
-          <label class="control-label"></label>
-          <div class="controls">
-            <button class="btn btn-primary" ng-click="signup()">OK</button>
-          </div>
-        </div>
+      <div class="col-lg-12 no-margin">
+        <button class="btn btn-lg btn-primary pull-right" ng-click="signup()">validez</button>
       </div>
     </div>
   </form>
-  <div class="alert alert-success" ng-show="status == STATUS_ENUM.success">
+  <div class="alert alert-success" ng-show="statusIsSuccess()">
     <p>Inscription r&eacute;ussie</p>
   </div>
-  <div class="alert alert-danger" ng-show="status == STATUS_ENUM.fail">
+  <div class="alert alert-danger" ng-show="statusIsFail()">
     <p>L'inscription a &eacute;chou&eacute; {{errorMessage}}</p>
   </div>
 </div>
