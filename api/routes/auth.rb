@@ -1,12 +1,9 @@
 require_relative '../models/user_mapper'
+require_relative './common'
 require 'json'
 
 class Scarecrow < Sinatra::Application
-  options '*' do
-    response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS,POST'
-    # Needed for AngularJS
-    response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
-  end
+  include Common
 
   post '/auth/signup' do
     params = deep_symbolize JSON.parse(request.body.read)
@@ -57,12 +54,5 @@ class Scarecrow < Sinatra::Application
       status 400
       { :message => "LOGOUT_FAIL"}.to_json
     end
-  end
-
-  # method to deeply symbolize the keys of hash or the elements of an array
-  def deep_symbolize(obj)
-    return obj.inject({}){|memo,(k,v)| memo[k.to_sym] =  deep_symbolize(v); memo} if obj.is_a? Hash
-    return obj.inject([]){|memo,v    | memo           << deep_symbolize(v); memo} if obj.is_a? Array
-    return obj
   end
 end

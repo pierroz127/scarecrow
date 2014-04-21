@@ -1,0 +1,23 @@
+<div class="container">
+  <form class="form-signin" role="form">
+    <div class="modal-header">
+      <h2 class="form-signin-heading">connexion</h2>
+    </div>
+    <div class="modal-body">
+      <input type="email" ng-model="$parent.myEmail" class="form-control" placeholder="addresse email" required autofocus>
+      <input type="password" ng-model="$parent.myPassword" class="form-control" placeholder="mot de passe" required>
+      <label class="checkbox">
+        <input type="checkbox" value="remember-me">Se souvenir de moi</input>
+      </label>
+      <p><a>mot de passe oubli&eacute;?</a></p>
+    </div>
+    <div ng-show="errorVisible">
+      <div class="alert alert-danger">  
+        <strong>Erreur !&nbsp;</strong>La connexion a &eacute;chou&eacute; 
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-lg btn-primary btn-block" ng-click="login()">Sign in</button>
+    </div>
+  </form>
+</div>

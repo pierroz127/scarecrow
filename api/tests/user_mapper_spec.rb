@@ -1,18 +1,12 @@
 require 'rubygems'
-require 'data_mapper'
-require 'dm-migrations'
 require_relative '../models/user_mapper'
-require_relative '../models/session'
-require_relative '../models/child'
+require_relative '../models/init'
+require_relative './datamapper_spec'
 describe "user mapper" do 
   before(:all) do
     puts "coucou it's before"
     #setup database
-    DataMapper::Logger.new($stdout, :debug)
-    # A sqlite connection:
-    DataMapper.setup(:default, 'sqlite:///Users/pile/Projects/Angular/scarecrow/tests/scarecrow.db')
-    DataMapper.finalize
-    DataMapper.auto_migrate!
+    DatamapperSpec.init
   end
 
   it "can create a user" do
@@ -163,7 +157,6 @@ describe "user mapper" do
     expect(UserMapper.exists("user_07@scarecrow.com", "xyz")).to be_true
     expect(UserMapper.exists("xyz@scarecrow.com", "user_07")).to be_true
     expect(UserMapper.exists("xyz@scarecrow.com", "xyz")).to be_false
-
 
   end
 

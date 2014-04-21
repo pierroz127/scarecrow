@@ -10,7 +10,7 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'public',
-      dist: 'public'
+      dist: 'dist'
     },
     sync: {
       dist: {
@@ -102,6 +102,27 @@ module.exports = function (grunt) {
           'test/lib/angular-scenario': 'angular-scenario'
         }
       }
+    },
+
+    concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: [
+            '<%= yeoman.dist %>/js/app.js',
+            '<%= yeoman.dist %>/js/**/*.js'
+            ],
+        dest: '<%= yeoman.dist %>/combined.js',
+      },
+    },
+
+    uglify : {
+        js: {
+            files: {
+                '<%= yeoman.dist %>/combined.js' : [ '<%= yeoman.dist %>/combined.js' ]
+            }
+        }
     }
   });
 
@@ -113,4 +134,10 @@ module.exports = function (grunt) {
       'watch'
     ]);
   });
+
+  grunt.registerTask('build', [
+      'copy:dist',
+      'concat',
+      'uglify'
+    ]);
 };

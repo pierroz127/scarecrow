@@ -22,6 +22,12 @@ class Scarecrow < Sinatra::Application
     #sqlite connection
     DataMapper.setup(:default, 'sqlite:///Users/pile/Projects/scarecrow/api/scarecrow.db')
   end
+
+  options '*' do
+    response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS,POST'
+    # Needed for AngularJS
+    response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
+  end
 end
 
 require_relative 'models/init'

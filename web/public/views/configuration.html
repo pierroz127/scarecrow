@@ -1,0 +1,91 @@
+<div>
+<legend>Configuration des cr&egrave;ches</legend>
+  <div class="row">
+    <div class="col-lg-3 no-margin">
+      <div class="row">
+        <a style="margin:15px;" ng-click="addCreche()">Ajouter une creche</a>
+      </div>
+      <div class="row">
+        <ul>
+          <li ng-repeat="creche in creches">{{creche.name}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-9 no-margin">
+      <div ng-show="isCreatingNewCreche">
+        <form name="newcreche_form" class="form-horizontal" role="form">
+          <div class="row">
+            <div class="col-lg-3 no-margin">
+              <select placeholder="Type d'établissement" class="form-control">
+                <option value=1>Creche</option>
+                <option value=2>Halte Garderie</option>
+              </select>
+            </div>
+            <div class="col-lg-3 no-margin">
+              <select placeholder="Public, privé, associatif" class="col-lg-3 no margin form-control">
+                <option value=1>Public</option>
+                <option value=2>Privé</option>
+                <option value=3>Associatif</option>
+              </select>
+            </div>
+            <div class="col-lg-6 no-margin">
+              <input class="form-control" placeholder="Nom de l'établissement" ng-model="newCreche.name">
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-lg-1 no-margin">
+              <input class="form-control" placeholder="N°" ng-model="newCreche.number">
+            </div>
+            <div class="col-lg-5 no-margin">
+              <input class="form-control" placeholder="Rue, Boulevard, Avenue" ng-model="newCreche.street">
+            </div>
+            <div class="col-lg-2 no-margin">
+              <input class="form-control" placeholder="Code postal" ng-model="newCreche.zipcode">
+            </div>
+            <div class="col-lg-4 no-margin">
+              <input class="form-control" placeholder="Ville" ng-model="newCreche.city">
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-lg-4 no-margin">
+              <input class="form-control" ng-model="newCreche.email">
+            </div>
+            <div class="col-lg-4 no-margin">
+              <input class="form-control" placeholder="T&eacute;l&eacute;phone" ng-model="newCreche.phone">
+            </div>
+            <div class="col-lg-4 no-margin">
+              <input class="form-control" placeholder="Fax" ng-model="newCreche.fax">
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-lg-6 no-margin">
+              <input class="form-control" ng-model="newCreche.director_firstname" placeholder="Pr&eacute;nom du directeur">
+            </div>
+            <div class="col-lg-6 no-margin">
+              <input class="form-control" ng-model="newCreche.director_lastname" placeholder="Nom du directeur" >
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-lg-12 no-margin">
+              <label>Description de la structure</label>
+              <textarea class="form-control" ng-model="newCreche.description"></textarea> 
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-lg-12 no-margin">
+              <button class="btn btn-md btn-primary pull-right" ng-click="validate()">valider</button>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-lg-12 no-margin">
+              <div class="alert alert-danger" ng-show="creationFail">
+                <p>L'inscription a &eacute;chou&eacute;</p>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

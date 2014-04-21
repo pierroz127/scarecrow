@@ -26,6 +26,7 @@
      <div class="collapse navbar-collapse navbar-ex1-collapse"> 
       <ul class="nav navbar-nav navbar-right">
         <li ng-show="isAuthenticated"><p class="navbar-text"> {{user.email}}</p></li>
+        <li ng-show="isAuthenticated"><a href="#/configure">Configuration</a></li>
         <li ng-show="isAuthenticated"><a ng-click="logout()">Déconnexion</a></li>
         <li ng-show="!isAuthenticated"><a href="#/signup">Inscription</a></li>
         <li ng-show="!isAuthenticated"><a ng-click="login()">Connexion</a></li>
@@ -51,8 +52,11 @@
   <script src="js/controllers/homeController.js"></script>
   <script src="js/controllers/loginController.js"></script>
   <script src="js/controllers/signupController.js"></script>
+  <script src="js/controllers/configureController.js"></script>
   <script src="js/common/abstractCommonService.js"></script>
   <script src="js/common/child.js"></script>
+  <script src="js/common/apiProxy.js"></script>
+  <script src="js/common/session.js"></script>
   <script src="js/app.js"></script>
   <script>
     $(document).ready(function(){
