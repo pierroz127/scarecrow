@@ -15,6 +15,17 @@ class Scarecrow < Sinatra::Application
     }.to_json
   end
 
+  get '/creche' do 
+    creche = Creche.get(params[:crecheid])
+    content_type :json
+    if (creche)
+      { creche: creche }.to_json
+    else
+      status = 400
+      { message: 'UNKNOWN_CRECHE'}.to_json
+    end
+  end
+
   post '/creche/new' do 
     params = deep_symbolize JSON.parse(request.body.read)
     puts params

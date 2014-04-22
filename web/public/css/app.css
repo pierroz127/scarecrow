@@ -32,3 +32,7 @@ body.modal-open-noscroll {
 .modal-open-noscroll .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
   margin-right: 0!important;
 }
+
+.with-margin-top {
+  margin-top: 12px;
+}

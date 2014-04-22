@@ -14,8 +14,12 @@ angular.module('scarecrow', [
         controller: 'SignupCtrl'
       })
       .when('/configure', {
-        templateUrl: 'views/configuration.html',
-        controller: 'ConfigureCtrl'
+        templateUrl: 'views/creche/index.html',
+        controller: 'CrecheCtrl'
+      })
+      .when('/configure/:sub', {
+        templateUrl: 'views/creche/index.html',
+        controller: 'CrecheCtrl'
       })
       .when('/', {
         templateUrl: 'views/home/home.html', 

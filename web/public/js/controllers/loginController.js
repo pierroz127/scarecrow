@@ -4,6 +4,14 @@ var apiUri = 'http://localhost:8585';
 angular.module('scarecrow.controllers')
   .controller('LoginCtrl', ['$scope', '$modal', '$http', '$log', '$cookieStore', 'session', function($scope, $modal, $http, $log, $cookieStore, session) {
 
+    var tokenIsValid = function(tokenDate) {
+        console.log('token date: ' + tokenDate);
+        var validDate = new Date(tokenDate);
+        validDate.setDate(validDate.getDate() + 1);
+        var now = new Date();
+        return validDate > now;
+    }
+
     var reset = function () {
       session().reset();
       $scope.user = { 'email' : ''};
@@ -13,7 +21,14 @@ angular.module('scarecrow.controllers')
     }
 
     var initialize = function() {
-      if (!$scope.user) {
+      var cookie = $cookieStore.get('scarecrow_token');
+      if (cookie && cookie.date && tokenIsValid(cookie.date)) {
+        console.log('token present and valid');
+        $scope.isAuthenticated = true;
+        $scope.user = { 'email' : cookie.email }
+        session().set(cookie.email);
+      } else {
+        console.log('no valid token');
         $scope.isAuthenticated = false;
         $scope.user = { 'email' : ''};
       }
@@ -71,7 +86,12 @@ var loginInstanceCtrl = function($scope, $modalInstance, http, cookieStore) {
     http.post(apiUri + '/auth/login/?', user)
         .success(function(data, status) {
           console.log("token: " + data.token);
-          cookieStore.put('token', data.token);
+          cookieStore.put('scarecrow_token', {
+            date: new Date(),
+            token: data.token,
+            email: user.email
+          });
+
           $modalInstance.close(user.email);
         })
         .error(function(data, status) {

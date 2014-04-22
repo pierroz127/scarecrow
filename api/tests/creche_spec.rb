@@ -39,4 +39,13 @@ describe "creche spec" do
     read_creches = Creche.all({email: "hector@gmail.com"})
     read_creches.length.should eq(2)
   end
+
+  it "creche retrieved by id" do
+    creche = Creche.new({name: "creche_spec04", city: "cergy", email: "spec4@gmail.com"})
+    expect(creche.save).to be_true
+    read_creche = Creche.first({name: "creche_spec04"})
+    read_creche2 = Creche.get(read_creche.id)
+    expect(read_creche2).to be_true
+    read_creche2.name.should eq("creche_spec04")
+  end
 end
