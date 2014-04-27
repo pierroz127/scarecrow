@@ -1,7 +1,7 @@
 require 'rubygems'
-require_relative '../models/user_mapper'
-require_relative '../models/init'
-require_relative './datamapper_spec'
+require_relative '../../models/user_mapper'
+require_relative '../../models/init'
+require_relative 'datamapper_spec'
 describe "user mapper" do 
   before(:all) do
     puts "coucou it's before"

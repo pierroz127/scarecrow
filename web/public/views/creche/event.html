@@ -1,0 +1,70 @@
+<div class="container">
+  <form name="event_form" class="form-horizontal" role="form">
+    <div class="modal-header">
+      <h2 class="form-signin-heading">Disponibilités</h2>
+    </div>
+  
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-3 no-margin">
+          <label>Date: </label>
+        </div>
+        <div class="col-md-9 no-margin">
+          <!--<input class="form-control" type="date" ng-model="calEvent.starts_on">-->
+          <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="calEvent.starts_on" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+        </div>
+      </div>
+
+      <div class="row with-margin-top">
+        <div class="col-md-3 no-margin">
+          <label>Activité: </label>
+        </div>
+        <div class="col-md-9 no-margin">
+          <select class="form-control" ng-model="activity" ng-options="a.label for a in activities"></select><br>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 no-margin">
+          <div class="row">
+            <div class="col-md-6 no-margin">
+              <label>Début: </label>
+            </div>
+            <div class="col-md-6 no-margin">
+              <input class="form-control" value="{{getStrTime(activity.starts_at)}}" readonly>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 no-margin">
+          <div class="row">
+            <div class="col-md-6 no-margin">
+              <label>Fin: </label>
+            </div>
+            <div class="col-md-6 no-margin">
+              <input class="form-control" value="{{getStrTime(activity.ends_at)}}" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row with-margin-top">
+        <div class="col-md-4 no-margin">
+          <label>Grand: </label>
+          <input class="form-control" type="number" ng-model="calEvent.great_cradles" min="0"> 
+        </div>
+        <div class="col-md-4 no-margin">
+          <label>Moyen: </label>
+          <input class="form-control" type="number" ng-model="calEvent.medium_cradles" min="0"> 
+        </div>
+        <div class="col-md-4 no-margin">
+          <label>Petit: </label>
+          <input class="form-control" type="number" ng-model="calEvent.baby_cradles" min="0"> 
+        </div>
+      </div>
+    </div> <!-- end of modal body -->
+
+    <div class="modal-footer">
+      <button class="btn btn-primary pull-right" ng-click="addEvent(activity.id)">OK</button>
+    </div>
+  </form>
+</div>

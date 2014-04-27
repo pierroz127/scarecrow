@@ -1,5 +1,5 @@
-require_relative '../models/init'
-require_relative './datamapper_spec'
+require_relative '../../models/init'
+require_relative 'datamapper_spec'
 
 describe "creche spec" do 
   before(:all) do
@@ -29,6 +29,7 @@ describe "creche spec" do
     activities.length.should eq(1)
   end
 
+
   it "create several creches for the same administrator" do 
     creche =  Creche.new({name: "test03_creche01", city: "Rueil", email: "hector@gmail.com"})
     expect(creche.save).to be_true
@@ -47,5 +48,16 @@ describe "creche spec" do
     read_creche2 = Creche.get(read_creche.id)
     expect(read_creche2).to be_true
     read_creche2.name.should eq("creche_spec04")
+  end
+
+  it "test json serialization" do
+    creche = Creche.new({name: "creche_spec05", city: "cergy", email: "bob@gmail.com"})
+    creche.activities << Activity.default
+    creche.save
+    read_creche = Creche.first({name: "creche_spec05"})
+    
+    s = read_creche.to_json
+    puts s
+    expect(s).to be_true
   end
 end

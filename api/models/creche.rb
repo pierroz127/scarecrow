@@ -1,3 +1,5 @@
+require 'dm-constraints'
+require 'json'
 class Creche
   include DataMapper::Resource
 
@@ -14,5 +16,10 @@ class Creche
   property :fax, String # let's see later if it needs to be a number a whatever
   property :phone, String
 
-  has n, :activities
+  has n, :activities, :constraint => :destroy
+
+  def to_json_with_attributes(*args)
+  #  puts "coucou"
+    as_json.merge({activities: activities}).to_json
+  end
 end

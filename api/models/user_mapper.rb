@@ -33,12 +33,8 @@ class UserMapper
   def self.logout(email, token)
     current_user = User.first(:email => email)
     return nil if current_user.nil?
-    session = current_user.sessions.find { |s| s.token == token }
-    if session
-      session.destroy
-    else
-      nil
-    end
+    puts "current user found: #{current_user.email} with #{current_user.sessions.length} sessions"
+    current_user.sessions.destroy
   end
 
   def self.exists(email, pseudo)

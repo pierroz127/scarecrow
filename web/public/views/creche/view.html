@@ -8,10 +8,6 @@
   </div>
   <div ng-show="isViewMenu('home')">
     <div class="row with-margin-top">
-      <div class="col-lg-6 no-margin">
-        <label>Nom de la structure</label>
-        <p>{{creche.name}}<p>
-      </div>
       <div class="col-lg-3 no-margin">
         <label>Type d'établissement:</label>
         <select class="form-control">
@@ -26,6 +22,10 @@
           <option value=2>Privé</option>
           <option value=3>Associatif</option>
         </select>
+      </div>
+      <div class="col-lg-6 no-margin">
+        <label>Nom de la structure</label>
+        <p>{{creche.name}}<p>
       </div>
     </div>
     <div class="row with-margin-top">
@@ -77,6 +77,7 @@
     <div class="row with-margin-top">
       <div class="col-lg-12 no-margin">
         <a class="btn btn-md btn-primary pull-right" href="#/configure/edit/{{creche.id}}">&Eacute;diter</a>
+        <a class="btn btn-md btn-primary pull-right" style="margin-right: 15px;" ng-click="deleteCreche(creche.id)">Effacer</a>
       </div>
     </div>
   </div>
@@ -91,8 +92,16 @@
   <!-- Menu Schedule -->
   <div ng-show="isViewMenu('schedule')">
     <div class="row with-margin-top">
-      <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div> 
-      <p><strong>TODO Configuration du planning</strong></p>
+      <div class="btn-toolbar">
+        <div class="btn-group">
+          <button class="btn btn-success" ng-click="changeCalendarView('agendaDay', crecheCalendar)">Jour</button>
+          <button class="btn btn-success" ng-click="changeCalendarView('agendaWeek', crecheCalendar)">Semaine</button>
+          <button class="btn btn-success" ng-click="changeCalendarView('month', crecheCalendar)">Mois</button>
+        </div>
+        <button class="btn btn-primary pull-right" ng-click="addEvent()">Ajouter des disponibilités</button>
+      </div>
+      <div ui-calendar="uiConfig.calendar" class="span8 calendar with-margin-top" ng-model="eventSources" calendar="crecheCalendar"></div> 
+      <div>{{setCalendar(crecheCalendar)}}
     </div>
   </div>
 </div>

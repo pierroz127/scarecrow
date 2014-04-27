@@ -2,8 +2,8 @@
 var apiUri = 'http://localhost:8585';
 
 angular.module('scarecrow.controllers')
-  .controller('LoginCtrl', ['$scope', '$modal', '$http', '$log', '$cookieStore', 'session', function($scope, $modal, $http, $log, $cookieStore, session) {
-
+  .controller('LoginCtrl', ['$scope', '$modal', '$http', '$log', '$cookieStore', '$location', 'session', 
+    function($scope, $modal, $http, $log, $cookieStore, $location, session) {
     var tokenIsValid = function(tokenDate) {
         console.log('token date: ' + tokenDate);
         var validDate = new Date(tokenDate);
@@ -60,11 +60,13 @@ angular.module('scarecrow.controllers')
     };
 
     $scope.logout = function() {
-      var token = $cookieStore.get('token');
-      $http.post(apiUri + '/auth/logout', {"email": $scope.user.email, "token": token})
+      var cookie = $cookieStore.get('scarecrow_token');
+      $http.post(apiUri + '/auth/logout', {"email": $scope.user.email, "token": cookie.token})
         .success(function(data, status) {
+          console.log('user logged out');
           reset();
-          $cookieStore.remove('token');
+          $cookieStore.remove('scarecrow_token');
+          $location.path('/');
         })
         .error(function(data, status) {
           console.log(data.message);
