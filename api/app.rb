@@ -24,9 +24,7 @@ class Scarecrow < Sinatra::Application
     #DataMapper.setup(:default, 'mysql://scarecrow_user:scarecrow@localhost/scarecrow')
 
     #sqlite connection
-    puts "DataMapper setup..."
-    db_path = File.join(File.dirname(__FILE__), 'heroku_scarecrow.db')
-    DataMapper.setup(:default, "sqlite://#{db_path}")
+    DataMapper.setup(:default, 'postgres://localhost/scarecrow')
   end
 
   options '*' do

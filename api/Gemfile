@@ -9,6 +9,6 @@ gem 'thin', platform: :mri_19
 gem 'oj', platform: :mri_19
 gem 'multi_json'
 gem 'data_mapper', '1.2.0'
-#gem 'dm-mysql-adapter', '1.2.0', group: :development
-gem 'dm-sqlite-adapter', '1.2.0', group: :development
+gem 'dm-postgres-adapter', '1.2.0'
 gem 'runt'
+gem'pg'
