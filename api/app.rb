@@ -16,7 +16,7 @@ class Scarecrow < Sinatra::Application
   set :allow_credentials, true
   set :max_age, "1728000"
   set :expose_headers, ['Content-Type']
-  set :protection, :origin_whitelist => ['http://127.0.0.1:9000'], :except => [:remote_tokenp]
+  set :protection, :origin_whitelist => ['http://127.0.0.1:9000'], :except => [:remote_token, :http_origin]
   configure :development do
     DataMapper::Logger.new($stdout, :debug)
     
@@ -33,10 +33,14 @@ class Scarecrow < Sinatra::Application
     response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
   end
 
-  before do
+  before /^\/(auth|creche)/ do
     content_type 'application/json'
+  end
+
+  before do 
     next unless request.post?
     @params = deep_symbolize JSON.parse(request.body.read)
+    puts "@params: #{@params}"
   end
 end
 

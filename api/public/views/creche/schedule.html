@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-2 no-margin">
+    <div class="row">
+      <a href="#/configure/new">Ajouter une creche</a>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="btn-group-vertical">
+        <a class="btn btn-default" ng-repeat="c in creches" href="#/configure/{{c.id}}">{{c.name}}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-10 no-margin">
+
+    <div>
+
+      <div class="row">
+        <ul class="nav nav-tabs">
+          <li class="{{ viewMenu === 'home' ? 'active' : '' }}"><a ng-click="setViewMenu('home')">La structure</a></li>
+          <li class="{{ viewMenu === 'activities' ? 'active' : '' }}"><a ng-click="setViewMenu('activities')">Les activit&eacute;s</a></li>
+          <li class="{{ viewMenu === 'schedule' ? 'active' : '' }} "><a href="/creche/{{creche.id}}/schedule">Le planning</a></li>
+        </ul>
+      </div>
+
+      <div class="row with-margin-top">
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn btn-success" ng-click="changeCalendarView('agendaDay', crecheCalendar)">Jour</button>
+            <button class="btn btn-success" ng-click="changeCalendarView('agendaWeek', crecheCalendar)">Semaine</button>
+            <button class="btn btn-success" ng-click="changeCalendarView('month', crecheCalendar)">Mois</button>
+          </div>
+          <button class="btn btn-primary pull-right" ng-click="addEvent()">Ajouter des disponibilités</button>
+        </div>
+        <div ui-calendar="uiConfig.calendar" class="span8 calendar with-margin-top" ng-model="eventSources" calendar="crecheCalendar"></div> 
+        <div>{{setCalendar(crecheCalendar)}}</div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

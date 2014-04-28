@@ -39,6 +39,7 @@ class Scarecrow < Sinatra::Application
   end
 
   post '/auth/logout' do
+    puts "re @params: #{@params}"
     if UserMapper.logout(@params[:email], @params[:token])
       { :message => "LOGOUT_SUCCESS"}.to_json
     else

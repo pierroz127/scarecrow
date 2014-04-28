@@ -1,0 +1,106 @@
+<div>
+  <div class="row">
+    <ul class="nav nav-tabs">
+      <li class="{{ viewMenu === 'home' ? 'active' : '' }}"><a ng-click="setViewMenu('home')">La structure</a></li>
+      <li class="{{ viewMenu === 'activities' ? 'active' : '' }}"><a ng-click="setViewMenu('activities')">Les activit&eacute;s</a></li>
+      <li class="{{ viewMenu === 'schedule' ? 'active' : '' }} "><a ng-click="setViewMenu('schedule')">Le planning</a></li>
+    </ul>
+  </div>
+  <div ng-if="isViewMenu('home')">
+    <div class="row with-margin-top">
+      <div class="col-lg-3 no-margin">
+        <label>Type d'établissement:</label>
+        <select class="form-control">
+          <option value=1>Creche</option>
+          <option value=2>Halte Garderie</option>
+        </select>
+      </div>
+      <div class="col-lg-3 no-margin">
+        <label>Cat&eacute;gorie:</label>
+        <select placeholder="Public, privé, associatif" class="col-lg-3 no margin form-control">
+          <option value=1>Public</option>
+          <option value=2>Privé</option>
+          <option value=3>Associatif</option>
+        </select>
+      </div>
+      <div class="col-lg-6 no-margin">
+        <label>Nom de la structure</label>
+        <p>{{creche.name}}<p>
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <div class="col-lg-6 no-margin">
+        <label>Adresse</label>
+        <p>{{creche.number}}, {{creche.street}}</p>
+      </div>
+      <div class="col-lg-2 no-margin">
+        <label>Code Postal:</label>
+        <p>{{creche.zipcode}}</p>
+      </div>
+      <div class="col-lg-4 no-margin">
+        <label>Ville:</label>
+        <p>{{creche.city}}</p>
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <div class="col-lg-4 no-margin">
+        <label>Email:</label>
+        <p>{{creche.email}}</p>
+      </div>
+      <div class="col-lg-4 no-margin">
+        <label>T&eacute;l&eacute;phone:</label>
+        <p>{{creche.phone}}</p>
+      </div>
+      <div class="col-lg-4 no-margin">
+        <label>Fax:</label>
+        <p>{{creche.fax}}</p>
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <div class="col-lg-12 no-margin">
+        <label>Pr&eacute;nom, Nom du directeur:</label>
+        <p>{{creche.director_firstname}} {{creche.director_lastname}}</p>
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <div class="col-lg-12 no-margin">
+        <label>Description de la structure:</label>
+        <p>{{creche.description}}</p> 
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <div class="col-lg-12 no-margin">
+        <label>TODO:</label>
+        <p>Horaires des journées & jours off</p>
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <div class="col-lg-12 no-margin">
+        <a class="btn btn-md btn-primary pull-right">&Eacute;diter</a>
+        <a class="btn btn-md btn-primary pull-right" style="margin-right: 15px;" ng-click="deleteCreche(creche.id)">Effacer</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Activities -->
+  <div ng-if="isViewMenu('activities')">
+    <div class="row with-margin-top">
+      <p><strong>TODO Configuration des activités</strong></p>
+    </div>
+  </div>
+
+  <!-- Menu Schedule -->
+  <div ng-if="isViewMenu('schedule')">
+    <div class="row with-margin-top">
+      <div class="btn-toolbar">
+        <div class="btn-group">
+          <button class="btn btn-success" ng-click="changeCalendarView('agendaDay', crecheCalendar)">Jour</button>
+          <button class="btn btn-success" ng-click="changeCalendarView('agendaWeek', crecheCalendar)">Semaine</button>
+          <button class="btn btn-success" ng-click="changeCalendarView('month', crecheCalendar)">Mois</button>
+        </div>
+        <button class="btn btn-primary pull-right" ng-click="addEvent()">Ajouter des disponibilités</button>
+      </div>
+      <div ui-calendar="uiConfig.calendar" class="span8 calendar with-margin-top" ng-model="eventSources" calendar="crecheCalendar"></div> 
+    </div>
+  </div>
+</div>

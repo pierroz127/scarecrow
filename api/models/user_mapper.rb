@@ -31,6 +31,7 @@ class UserMapper
   end
 
   def self.logout(email, token)
+    puts "logout email #{email}"
     current_user = User.first(:email => email)
     return nil if current_user.nil?
     puts "current user found: #{current_user.email} with #{current_user.sessions.length} sessions"

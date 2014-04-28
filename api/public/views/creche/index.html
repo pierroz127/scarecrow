@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-lg-2 no-margin">
+    <div class="row">
+      <a href="#/configure/new">Ajouter une creche</a>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div class="btn-group-vertical">
+        <a class="btn btn-default" ng-repeat="c in creches" href="#/configure/{{c.id}}">{{c.name}}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-10 no-margin">
+    <ng-switch on="menu">
+      <div ng-switch-when="new">
+        <creche-new></creche-new>
+      </div>
+      <div ng-switch-when="view">
+        <creche-view></creche-view>
+      </div>
+    </ng-switch>
+  </div>
+</div>
