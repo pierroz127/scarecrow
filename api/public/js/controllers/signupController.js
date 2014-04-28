@@ -1,4 +1,4 @@
-var apiUri = 'http://localhost:8585';
+var apiUri = '';
 
 angular.module('scarecrow.controllers')
   .controller('SignupCtrl', ['$scope', '$http', '$location', '$route', 'Child', function($scope, $http, $location, $route, Child) {

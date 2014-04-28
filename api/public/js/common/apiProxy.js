@@ -1,7 +1,7 @@
 angular.module('scarecrow.common.services')
   .factory('apiProxy', ['$http',
     function($http) {
-      var apiProxyUrl = 'http://localhost:8585/';
+      var apiProxyUrl = '';
 
       var __doPost = function(route, data, successCallback, errorCallback) {
         $http.post(apiProxyUrl + route, data)

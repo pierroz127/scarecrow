@@ -1,5 +1,5 @@
 // TODO(pile) make it configurable
-var apiUri = 'http://localhost:8585';
+var apiUri = '';
 
 angular.module('scarecrow.controllers')
   .controller('LoginCtrl', ['$scope', '$modal', '$http', '$log', '$cookieStore', '$location', 'session', 
