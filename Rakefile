@@ -8,13 +8,13 @@ end
 namespace :db do 
   desc "auto migrates the database"
   task :migrate do
-    require_relative 'app'
+    require_relative 'api/app'
     DataMapper.auto_migrate!
   end
 
   desc "auto upgrades the database"
   task :upgrade do
-    require_relative 'app'
+    require_relative 'api/app'
     DataMapper.auto_upgrade! 
   end
 end
