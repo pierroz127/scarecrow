@@ -4,3 +4,4 @@
 node_modules
 web/public/lib/*
 Gemfile.lock
+*.orig
