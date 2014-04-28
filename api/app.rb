@@ -17,13 +17,14 @@ class Scarecrow < Sinatra::Application
   set :max_age, "1728000"
   set :expose_headers, ['Content-Type']
   set :protection, :origin_whitelist => ['http://127.0.0.1:9000'], :except => [:remote_token, :http_origin]
-  configure :development do
+  configure do
     DataMapper::Logger.new($stdout, :debug)
     
     # A MySQL connection:
     #DataMapper.setup(:default, 'mysql://scarecrow_user:scarecrow@localhost/scarecrow')
 
     #sqlite connection
+    puts "DataMapper setup..."
     db_path = File.join(File.dirname(__FILE__), 'heroku_scarecrow.db')
     DataMapper.setup(:default, "sqlite://#{db_path}")
   end
