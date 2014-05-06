@@ -4,3 +4,5 @@
 node_modules
 web/public/lib/*
 *.orig
+feedbacks.txt
+*.db

@@ -16,10 +16,13 @@ class Creche
   property :fax, String # let's see later if it needs to be a number a whatever
   property :phone, String
 
+  has n, :open_days, :constraint => :destroy
   has n, :activities, :constraint => :destroy
+  has n, :sections, :constraint => :destroy
+
 
   def to_json_with_attributes(*args)
   #  puts "coucou"
-    as_json.merge({activities: activities}).to_json
+    as_json.merge({activities: activities, open_days: open_days, sections: sections}).to_json
   end
 end

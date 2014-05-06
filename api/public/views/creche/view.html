@@ -31,7 +31,7 @@
     <div class="row with-margin-top">
       <div class="col-lg-6 no-margin">
         <label>Adresse</label>
-        <p>{{creche.number}}, {{creche.street}}</p>
+        <p>{{creche.number}} {{creche.street}}</p>
       </div>
       <div class="col-lg-2 no-margin">
         <label>Code Postal:</label>
@@ -68,15 +68,65 @@
         <p>{{creche.description}}</p> 
       </div>
     </div>
-    <div class="row with-margin-top">
-      <div class="col-lg-12 no-margin">
-        <label>TODO:</label>
-        <p>Horaires des journées & jours off</p>
+
+    <!-- configuration of the open days -->
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-lg-5 no-margin">
+        <label>Jours et heures d'ouverture</label>
+      </div>
+      <div class="col-lg-7 no-margin">
+        <label>Sections</label>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-lg-5 no-margin">
+        <div class="row with-margin-top" ng-repeat="od in creche.open_days">
+          <div class="input-group col-md-12">
+            <div class="open-day">
+              <span class="form-control"> {{ getStrDay(od.day_of_week) }}</span>
+            </div> 
+            <div class="open-hour"> 
+              <input class="form-control" value="{{getStrTime(od.opens_at)}}" type="time" readonly>
+            </div>
+            <div class="open-hour">
+              <input class="form-control" value="{{getStrTime(od.closes_at)}}" type="time" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7 no-margin">
+        <div class="row with-margin-top">
+          <table>
+            <thead>
+              <th width="40%">Nom de la section</th>
+              <th width="25%">Nés entre le:</th>
+              <th width="25%">Et le:</th>
+              <th width="10%"></th>
+            </thead>
+            <tr ng-repeat="section in creche.sections">
+              <td>
+                <input type="text" class="form-control" placeholder="Nom de la section" ng-model="section.name" readonly>
+              </td>
+              <td>
+                <input type="date" class="form-control" style="padding-right: 6px !important; padding-left: 6px !important; width: 150px;" ng-model="section.min_birthdate" readonly>
+              </td>
+              <td>
+                <input type="date" class="form-control" style="padding-right: 6px !important; padding-left: 6px !important; width: 150px;" ng-model="section.max_birthdate" readonly>
+              </td>
+              <td>
+                <button class="btn btn-default" ng-click="deleteSection(section)">X</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <div class="row with-margin-top">
       <div class="col-lg-12 no-margin">
-        <a class="btn btn-md btn-primary pull-right">&Eacute;diter</a>
+        <a class="btn btn-md btn-primary pull-right" href="#/creche/edit/{{creche.id}}">&Eacute;diter</a>
         <a class="btn btn-md btn-primary pull-right" style="margin-right: 15px;" ng-click="deleteCreche(creche.id)">Effacer</a>
       </div>
     </div>

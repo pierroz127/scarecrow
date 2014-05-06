@@ -57,9 +57,71 @@
         <textarea class="form-control" ng-model="creche.description"></textarea> 
       </div>
     </div>
+
+    <!-- configuration of the opening days -->
+    <div class="row" style="margin-top: 10px;">
+      <div class="col-lg-5 no-margin">
+        <label>Jours et heures d'ouverture</label>
+      </div>
+      <div class="col-lg-7 no-margin">
+        <label>Sections</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-5 no-margin">
+        <div class="row" style="margin-top: 10px;" ng-repeat="od in openDays">
+          <div class="input-group col-md-12">
+            <span class="input-group-addon">
+              <input type="checkbox" ng-model="od.isOpen">
+            </span>
+            <div class="open-day">
+              <span class="form-control">{{ getStrDay(od.day_of_week) }}</span>
+            </div> 
+            <div class="open-hour">
+              <input class="form-control" ng-model="od.opens_at" type="time">
+            </div>
+            <div class="open-hour">
+              <input class="form-control" ng-model="od.closes_at" type="time">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7 no-margin">
+        <div class="row with-margin-top">
+          <table>
+            <thead>
+              <th width="40%">Nom de la section</th>
+              <th width="25%">Nés entre le:</th>
+              <th width="25%">Et le:</th>
+              <th width="10%"></th>
+            </thead>
+            <tr ng-repeat="section in creche.sections">
+              <td>
+                <input type="text" class="form-control" placeholder="Nom de la section" ng-model="section.name">
+              </td>
+              <td>
+                <input type="date" class="form-control" style="padding-right: 6px !important; padding-left: 6px !important; width: 150px;" ng-model="section.min_birthdate">
+              </td>
+              <td>
+                <input type="date" class="form-control" style="padding-right: 6px !important; padding-left: 6px !important; width: 150px;" ng-model="section.max_birthdate">
+              </td>
+              <td>
+                <button class="btn btn-default" ng-click="deleteSection(section)">X</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="row with-margin-top">
+          <a ng-click="addSection()">Ajouter une section</a>
+        </div>
+      </div>
+    </div>
+
     <div class="row" style="margin-top: 10px;">
       <div class="col-lg-12 no-margin">
-        <button class="btn btn-md btn-primary pull-right" ng-click="validate()">valider</button>
+        <button class="btn btn-md btn-primary pull-right" ng-click="saveCreche()">valider</button>
       </div>
     </div>
     <div class="row" style="margin-top: 10px;">

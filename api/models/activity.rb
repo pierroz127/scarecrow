@@ -1,5 +1,3 @@
-require_relative '../helpers/section'
-
 class Activity
   include DataMapper::Resource
 
@@ -18,7 +16,7 @@ class Activity
       label: "Journée Entière", 
       starts_at: DateTime.new(2000, 1, 1, 8, 30), 
       ends_at: DateTime.new(2000,1,1,19,00),
-      section: Section::BB | Section::MD | Section::GT })
+      section: 7 })
   end
 
 end

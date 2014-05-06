@@ -4,14 +4,16 @@ angular.module('scarecrow.common.services')
       var apiProxyUrl = '';
 
       var __doPost = function(route, data, successCallback, errorCallback) {
-        $http.post(apiProxyUrl + route, data)
-          .success(successCallback)
-          .error(errorCallback);
+        $http.post(apiProxyUrl + route, data).success(successCallback).error(errorCallback);
       };
 
       var __doGet = function(route, successCallback, errorCallback) {
         $http.get(apiProxyUrl + route).success(successCallback).error(errorCallback);
-      }
+      };
+
+      var __doPut = function(route, data, successCallback, errorCallback) {
+        $http.put(apiProxyUrl + route, data).success(successCallback).error(errorCallback);
+      };
 
       var apiProxy = {
         getCreches : function(userId, successCallback, errorCallback) {
@@ -24,6 +26,10 @@ angular.module('scarecrow.common.services')
 
         addNewCreche : function(creche, successCallback, errorCallback) {
           __doPost('creche/new', creche, successCallback, errorCallback);
+        },
+
+        updateCreche: function(creche, successCallback, errorCallback) {
+          __doPut('creche/' + creche.id, creche, successCallback, errorCallback);
         },
 
         deleteCreche: function(crecheId, successCallback, errorCallback) {

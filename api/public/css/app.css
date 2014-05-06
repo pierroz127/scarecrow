@@ -36,3 +36,15 @@ body.modal-open-noscroll {
 .with-margin-top {
   margin-top: 12px;
 }
+
+.open-day {
+  display: table;
+  float: left;
+  width: 35%;
+}
+
+.open-hour {
+  display: table;
+  float: left;
+  width: 10%;
+}

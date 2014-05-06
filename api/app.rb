@@ -16,7 +16,7 @@ class Scarecrow < Sinatra::Application
   set :allow_credentials, true
   set :max_age, "1728000"
   set :expose_headers, ['Content-Type']
-  set :protection, :origin_whitelist => ['http://127.0.0.1:9000'], :except => [:remote_token, :http_origin]
+  set :protection, :except => [:remote_token, :http_origin]
   configure do
     DataMapper::Logger.new($stdout, :debug)
     
@@ -24,7 +24,7 @@ class Scarecrow < Sinatra::Application
     #DataMapper.setup(:default, 'mysql://scarecrow_user:scarecrow@localhost/scarecrow')
 
     #sqlite connection
-    db_url = ENV['DATABASE_URL'] || "postgres://localhost/scarecrow"
+    db_url = ENV['DATABASE_URL'] || "sqlite://" + File.join(File.dirname(__FILE__), "scarecrow.db")
     puts "DB URL: #{db_url}"
     DataMapper.setup(:default, db_url)
   end
@@ -40,7 +40,7 @@ class Scarecrow < Sinatra::Application
   end
 
   before do 
-    next unless request.post?
+    next if request.get?
     @params = deep_symbolize JSON.parse(request.body.read)
     puts "@params: #{@params}"
   end

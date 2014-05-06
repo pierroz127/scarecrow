@@ -1,6 +1,7 @@
 require_relative 'common'
 require_relative '../models/init'
 require_relative '../helpers/event_helper'
+require_relative '../helpers/creche_helper'
 require 'json'
 
 class Scarecrow < Sinatra::Application
@@ -46,6 +47,30 @@ class Scarecrow < Sinatra::Application
     else
       status 400
       { message: 'UNKNOWN_CRECHE' }.to_json
+    end
+  end
+
+  put '/creche/:id' do
+    creche = Creche.get(params[:id])
+
+    @params.delete("splat")
+    @params.delete("captures")
+    puts "keys: #{@params.keys}"
+
+    creche.activities.destroy
+    if (@params[:activities])
+      @params[:activities].each { |activity| activity.delete(:id) }
+    end
+    creche.open_days.destroy
+    section_attributes = @params[:sections]
+    CrecheHelper::update_sections(creche, section_attributes)
+    @params.delete(:sections)
+    #if (@params[:opend_days])
+    if (creche.update(@params))
+      { message: "CRECHE_UPDATE_SUCCESSFUL" }.to_json
+    else
+      status 400
+      { message: "CRECHE_UPDATE_FAIL" }.to_json
     end
   end
 

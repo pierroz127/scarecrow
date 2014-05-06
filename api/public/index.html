@@ -27,7 +27,7 @@
      <div class="collapse navbar-collapse navbar-ex1-collapse"> 
       <ul class="nav navbar-nav navbar-right">
         <li ng-show="isAuthenticated"><p class="navbar-text"> {{user.email}}</p></li>
-        <li ng-show="isAuthenticated"><a href="#/configure">Configuration</a></li>
+        <li ng-show="isAuthenticated"><a href="#/creche">Configuration</a></li>
         <li ng-show="isAuthenticated"><a ng-click="logout()">Déconnexion</a></li>
         <li ng-show="!isAuthenticated"><a href="#/signup">Inscription</a></li>
         <li ng-show="!isAuthenticated"><a ng-click="login()">Connexion</a></li>
@@ -42,7 +42,9 @@
   <div class="container" ng-view></div>
   <script src="lib/jquery/dist/jquery.js"></script>
   <script src="lib/jquery-ui/ui/jquery-ui.js"></script>
+  <script src="lib/bootstrap-css/js/bootstrap.js"></script>
   <script src="lib/lodash/dist/lodash.js"></script>
+  <script src="lib/underscore/underscore.js"></script>
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular-cookies/angular-cookies.js"></script>
   <script src="lib/angular-resource/angular-resource.js"></script>
@@ -60,6 +62,7 @@
   <script src="js/common/child.js"></script>
   <script src="js/common/apiProxy.js"></script>
   <script src="js/common/session.js"></script>
+  <script src="js/common/underscore.js"></script>
   <script src="js/app.js"></script>
   <script>
     $(document).ready(function(){

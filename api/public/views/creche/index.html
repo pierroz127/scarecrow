@@ -1,11 +1,13 @@
 <div class="row">
   <div class="col-lg-2 no-margin">
     <div class="row">
-      <a href="#/configure/new">Ajouter une creche</a>
+      <a href="#/creche/new">Ajouter une creche</a>
     </div>
     <div class="row" style="margin-top: 10px;">
       <div class="btn-group-vertical">
-        <a class="btn btn-default" ng-repeat="c in creches" href="#/configure/{{c.id}}">{{c.name}}</a>
+        <!--<label class="btn btn-primae" ng-repeat="c in creches">-->
+          <a href="#/creche/{{c.id}}" class="btn btn-default {{isActive(c.id)}}" ng-repeat="c in creches"> {{c.name}}</a>
+        <!--</label>-->
       </div>
     </div>
   </div>
@@ -13,6 +15,9 @@
   <div class="col-lg-10 no-margin">
     <ng-switch on="menu">
       <div ng-switch-when="new">
+        <creche-new></creche-new>
+      </div>
+      <div ng-switch-when="edit">
         <creche-new></creche-new>
       </div>
       <div ng-switch-when="view">
