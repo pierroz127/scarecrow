@@ -20,7 +20,7 @@ describe 'event_helper spec' do
       label: "demi journée", starts_at: 
       DateTime.new(2000, 1, 1, 8, 30), 
       ends_at: DateTime.new(2000,1,1,12,00),
-      section: Section::BB | Section::MD | Section::GT })
+      section: SectionType::BB | SectionType::MD | SectionType::GT })
     creche.activities << activity2
     activity2.events << Event.new({starts_on: DateTime.new(2013, 1, 2), frequency: 0})
     activity2.events << Event.new({starts_on: DateTime.new(2013, 1, 3 ), frequency: 0})
