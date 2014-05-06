@@ -24,7 +24,7 @@ class Scarecrow < Sinatra::Application
     #DataMapper.setup(:default, 'mysql://scarecrow_user:scarecrow@localhost/scarecrow')
 
     #sqlite connection
-    db_url = ENV['DATABASE_URL'] || "sqlite://" + File.join(File.dirname(__FILE__), "scarecrow.db")
+    db_url = ENV['DATABASE_URL'] || "postgres://localhost/scarecrow"
     puts "DB URL: #{db_url}"
     DataMapper.setup(:default, db_url)
   end
