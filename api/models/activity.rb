@@ -3,20 +3,42 @@ class Activity
 
   property :id, Serial
   property :label, String, required: true
-  property :starts_at, DateTime, required: true
-  property :ends_at, DateTime, required: true
+  property :starts_at_earliest, DateTime, required: true
+  property :starts_at_latest, DateTime, required: true
+  property :ends_at_earliest, DateTime, required: true
+  property :ends_at_latest, DateTime, required: true
   property :description, String
-  property :section, Integer, required: true # bitmap with BB (0 to 12 months) = 1, MY (12 to 24 monts) = 2, GD (older) = 3
+  property :pricing, String
+  property :location, String
+  property :comments, String
 
   belongs_to :creche
   has n, :events
 
-  def self.default
-    activity = Activity.new({
-      label: "Journée Entière", 
-      starts_at: DateTime.new(2000, 1, 1, 8, 30), 
-      ends_at: DateTime.new(2000,1,1,19,00),
-      section: 7 })
+  def self.get_default_activities
+    activities = []
+    activities << Activity.new({
+      label: "FULL_DAY", 
+      starts_at_earliest: DateTime.new(2000, 1, 1, 8, 0), 
+      starts_at_latest: DateTime.new(2000, 1, 1, 9, 0), 
+      ends_at_earliest: DateTime.new(2000,1,1,17,00),
+      ends_at_latest: DateTime.new(2000,1,1,19,00),
+      });
+    activities << Activity.new({
+      label: "HALF_DAY_AM", 
+      starts_at_earliest: DateTime.new(2000, 1, 1, 8, 0), 
+      starts_at_latest: DateTime.new(2000, 1, 1, 9, 0), 
+      ends_at_earliest: DateTime.new(2000,1,1,11,30),
+      ends_at_latest: DateTime.new(2000,1,1,12,30),
+      });
+    activities << Activity.new({
+      label: "HALF_DAY_PM", 
+      starts_at_earliest: DateTime.new(2000, 1, 1, 13, 30), 
+      starts_at_latest: DateTime.new(2000, 1, 1, 14, 30), 
+      ends_at_earliest: DateTime.new(2000,1,1,17,00),
+      ends_at_latest: DateTime.new(2000,1,1,19,00),
+      });
+    activities
   end
 
 end

@@ -30,7 +30,9 @@ class Scarecrow < Sinatra::Application
     puts @params
     creche = Creche.new(@params)
     # TEMP create a default activity
-    creche.activities << Activity.default
+    activities = Activity.get_default_activities
+    activities.each { |a| creche.activities << a } 
+    puts "there are now #{creche.activities.length} activities"
     if (creche.save)
       { message: 'CRECHE_CREATION_SUCCESSFULL' }.to_json
     else

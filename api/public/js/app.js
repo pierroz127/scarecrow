@@ -13,11 +13,15 @@ angular.module('scarecrow', [
         templateUrl: 'views/signup.html',
         controller: 'SignupCtrl'
       })
-      .when('/creche', {
+      .when('/creche/:crecheId/activity/:edit?', {
+        templateUrl: 'views/creche/activity.html',
+        controller: 'ActivityCtrl'
+      })
+      .when('/creche/:sub/:crecheId?', {
         templateUrl: 'views/creche/index.html',
         controller: 'CrecheCtrl'
       })
-      .when('/creche/:sub/:crecheId?', {
+      .when('/creche', {
         templateUrl: 'views/creche/index.html',
         controller: 'CrecheCtrl'
       })

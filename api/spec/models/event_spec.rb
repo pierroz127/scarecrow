@@ -30,8 +30,8 @@ describe "event spec" do
 
   it "save a new event" do
     creche = Creche.new({name: "event_spec02", city: "Paris", email: "marcelo@gmail.com"})
-    activity = Activity.default
-    creche.activities<<activity
+    activities = Activity.get_default_activities
+    activities.each { |a| creche.activities << a }
     expect(creche.save).to be_true
 
     read_creche = Creche.first({name: "event_spec02"})
@@ -43,7 +43,7 @@ describe "event spec" do
     expect(activity.save).to be_true
 
     read_creche2 = Creche.first({name: "event_spec02"})
-    read_creche2.activities.length.should eq(1)
+    read_creche2.activities.length.should eq(3)
     activity = read_creche2.activities.first
     activity.events.length.should eq(1)
   end

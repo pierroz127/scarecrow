@@ -122,10 +122,11 @@ describe 'creche_helper spec' do
       :activities=>[{
           :id=>2, 
           :label=>"Journée Entière", 
-          :starts_at=>"2000-01-01T08:30:00+00:00", 
-          :ends_at=>"2000-01-01T19:00:00+00:00", 
+          :starts_at_earliest=>"2000-01-01T08:30:00+00:00", 
+          :starts_at_latest=>"2000-01-01T09:30:00+00:00", 
+          :ends_at_earliest=>"2000-01-01T17:00:00+00:00", 
+          :ends_at_latest=>"2000-01-01T19:00:00+00:00", 
           :description=>nil, 
-          :section=>7, 
           :creche_id=>2}], 
       :open_days=>[
         {:day_of_week=>1, :closes_at=>"2000-02-01T18:00:00.000Z", :opens_at=>"1900-01-01T07:30:00.000Z"}, 

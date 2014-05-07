@@ -2,6 +2,23 @@ angular.module('scarecrow.common.services')
   .factory('apiProxy', ['$http',
     function($http) {
       var apiProxyUrl = '';
+      var __activity_time_properties = ['starts_at_earliest', 'starts_at_latest', 'ends_at_earliest', 'ends_at_latest'];
+
+      var __updateDates = function(data, properties) 
+      {
+        for (var j=0; j<properties.length; j++) 
+        {
+          data[properties[j]] = new Date(data[properties[j]]);
+        }
+      };
+
+      var __updateCrecheDates = function(creche) 
+      {
+        for (var i=0; i<creche.activities.length; i++) 
+        {
+          __updateDates(creche.activities[i], __activity_time_properties);
+        }
+      };
 
       var __doPost = function(route, data, successCallback, errorCallback) {
         $http.post(apiProxyUrl + route, data).success(successCallback).error(errorCallback);
@@ -21,7 +38,13 @@ angular.module('scarecrow.common.services')
         },
 
         getCreche: function(crecheId, successCallback, errorCallback) {
-          __doGet('creche?crecheid=' + crecheId, successCallback, errorCallback);
+          __doGet('creche?crecheid=' + crecheId, 
+            function(data, status)
+            {
+              __updateCrecheDates(data.creche);
+              successCallback(data, status);
+            }, 
+            errorCallback);
         },
 
         addNewCreche : function(creche, successCallback, errorCallback) {
@@ -41,6 +64,24 @@ angular.module('scarecrow.common.services')
             calEvent,
             successCallback, 
             errorCallback);
+        },
+
+        addOrUpdateActivity: function(activity, successCallback, errorCallback) {
+          if (activity.id && activity.id > 0)
+          {
+            // update
+            __doPut('activity/' + activity.id, activity, 
+              function(data, status) {
+                __updateDates(data.activity, __activity_time_properties);
+                __updateCrecheDates(data.creche);
+                successCallback(data, status);
+              }, 
+              errorCallback);
+          }
+          else 
+          {
+            __doPost('activity/' + activity.id, activity, successCallback, errorCallback);
+          }
         },
 
         getCalendarEvents: function(crecheId, successCallback, errorCallback) {

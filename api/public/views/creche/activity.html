@@ -1,0 +1,102 @@
+<div class="row">
+  <ng-include src="'/views/creche/nav.html'"></ng-include>
+</div>
+<div class="row with-margin-top">
+  <div class="col-lg-3 no-margin">
+    <div class="btn-group-vertical">
+       <a ng-repeat="activity in creche.activities" class="btn btn-default {{isSelected(activity.id) ? 'active' : ''}}" ng-click="select(activity)"> {{activity.label}}</a>
+    </div>
+  </div>
+
+  <div class="col-lg-9 no-margin" ng-if="selectedActivity.id != 0">
+    <div class="row">
+      <label>Description:</label>
+      <div ng-if="isReadOnly() == true">
+        <textarea class="form-control" ng-model="selectedActivity.description" readonly></textarea> 
+      </div>
+      <div ng-if="isReadOnly() == false">
+        <textarea class="form-control" ng-model="selectedActivity.description"></textarea> 
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <label>Tarifs:</label>
+      <div ng-if="isReadOnly() == true">
+        <input type="text" class="form-control" ng-model="selectedActivity.pricing" readonly></input> 
+      </div>
+      <div ng-if="isReadOnly() == false">
+        <input type="text" class="form-control" ng-model="selectedActivity.pricing"></input> 
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <label>Horaires d'arriv&eacute;e:</label>
+    </div>
+    <div class="row" ng-if="isReadOnly() == true">
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.starts_at_earliest" readonly></input> 
+      </div>
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.starts_at_latest" readonly></input> 
+      </div>
+    </div>
+    <div class="row" ng-if="isReadOnly() == false">
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.starts_at_earliest"></input> 
+      </div>
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.starts_at_latest"></input> 
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <label>Horaires de d&eacute;part:</label>
+    </div>
+    <div class="row" ng-if="isReadOnly() == true">
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.ends_at_earliest" readonly></input> 
+      </div>
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.ends_at_latest" readonly></input> 
+      </div>
+    </div>
+    <div class="row" ng-if="isReadOnly() == false">
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.ends_at_earliest"></input> 
+      </div>
+      <div class="open-hour">
+        <input type="time" class="form-control" ng-model="selectedActivity.ends_at_latest"></input> 
+      </div>
+    </div>
+
+    <div class="row with-margin-top">
+      <label>Lieu:</label>
+      <div ng-if="isReadOnly() == true">
+        <input type="text" class="form-control" ng-model="selectedActivity.location" readonly></input> 
+      </div>
+      <div ng-if="isReadOnly() == false">
+        <input type="text" class="form-control" ng-model="selectedActivity.location"></input> 
+      </div>
+    </div>
+    <div class="row with-margin-top">
+      <label>A pr&eacute;voir:</label>
+      <div ng-if="isReadOnly() == true">
+        <textarea class="form-control" ng-model="selectedActivity.comments" readonly></textarea> 
+      </div>
+      <div ng-if="isReadOnly() == false">
+        <textarea class="form-control" ng-model="selectedActivity.comments"></textarea> 
+      </div>
+    </div>
+    <div class="row with-margin-top" ng-if="errorVisible() == true">
+      <div class="alert alert-danger">  
+        <strong>Erreur !&nbsp;</strong>La mise  &agrave;a jour a &eacute;chou&eacute; 
+      </div>
+    </div>
+    <div class="row with-margin-top" ng-if="isReadOnly() == false">
+      <a class="btn btn-md btn-primary pull-right" style="margin:5px;" ng-click="cancel()">annuler</a>
+      <a class="btn btn-md btn-primary pull-right" style="margin:5px;" ng-click="save()">sauvegarder</a>
+    </div>
+    <div class="row with-margin-top" ng-if="isReadOnly() == true">
+      <a class="btn btn-md btn-primary pull-right" style="margin:5px;" ng-click="edit()">&eacute;diter</a>
+    </div>
+  </div>
+
+
+</div>

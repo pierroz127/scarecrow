@@ -1,9 +1,11 @@
 <div>
   <div class="row">
     <ul class="nav nav-tabs">
-      <li class="{{ viewMenu === 'home' ? 'active' : '' }}"><a ng-click="setViewMenu('home')">La structure</a></li>
-      <li class="{{ viewMenu === 'activities' ? 'active' : '' }}"><a ng-click="setViewMenu('activities')">Les activit&eacute;s</a></li>
-      <li class="{{ viewMenu === 'schedule' ? 'active' : '' }} "><a ng-click="setViewMenu('schedule')">Le planning</a></li>
+      <li class="{{ viewMenu === 'home' ? 'active' : '' }}"><a ng-click="setViewMenu('home')">Ma structure</a></li>
+      <li class="{{ viewMenu === 'activities' ? 'active' : '' }}"><a href="#/creche/{{creche.id}}/activity">Les Temps d'accueil</a></li>
+      <li class="{{ viewMenu === 'schedule' ? 'active' : '' }} "><a ng-click="setViewMenu('schedule')">Planning et R&eacute;servations</a></li>
+      <li class="{{ viewMenu === 'team' ? 'active' : '' }} "><a ng-click="setViewMenu('team')">L'&eacute;quipe</a></li>
+      <li><a href="#/creche/{{creche.id}}/family">Les familles</a></li>
     </ul>
   </div>
   <div ng-if="isViewMenu('home')">
