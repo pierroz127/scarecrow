@@ -2,7 +2,7 @@
   <ul class="nav nav-tabs">
     <li class="{{crecheMenu == 'home' ? 'active':'' }}"><a href="#/creche/{{creche.id}}">Ma structure</a></li>
     <li class="{{crecheMenu == 'activity' ? 'active':'' }}"><a href="#/creche/{{creche.id}}/activity">Les Temps d'accueil</a></li>
-    <li class=""><a href="#/creche/{{creche.id}}">Planning et R&eacute;servations</a></li>
+    <li class="{{crecheMenu == 'schedule' ? 'active':'' }}"><a href="#/creche/{{creche.id}}/schedule">Planning et R&eacute;servations</a></li>
     <li class=""><a href="#/creche/{{creche.id}}">L'&eacute;quipe</a></li>
     <li><a href="#/creche/{{creche.id}}/family">Les familles</a></li>
   </ul>

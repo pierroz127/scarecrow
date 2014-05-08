@@ -3,7 +3,7 @@
     <ul class="nav nav-tabs">
       <li class="{{ viewMenu === 'home' ? 'active' : '' }}"><a ng-click="setViewMenu('home')">Ma structure</a></li>
       <li class="{{ viewMenu === 'activities' ? 'active' : '' }}"><a href="#/creche/{{creche.id}}/activity">Les Temps d'accueil</a></li>
-      <li class="{{ viewMenu === 'schedule' ? 'active' : '' }} "><a ng-click="setViewMenu('schedule')">Planning et R&eacute;servations</a></li>
+      <li class="{{ viewMenu === 'schedule' ? 'active' : '' }} "><a href="#/creche/{{creche.id}}/schedule">Planning et R&eacute;servations</a></li>
       <li class="{{ viewMenu === 'team' ? 'active' : '' }} "><a ng-click="setViewMenu('team')">L'&eacute;quipe</a></li>
       <li><a href="#/creche/{{creche.id}}/family">Les familles</a></li>
     </ul>
@@ -131,13 +131,6 @@
         <a class="btn btn-md btn-primary pull-right" href="#/creche/edit/{{creche.id}}">&Eacute;diter</a>
         <a class="btn btn-md btn-primary pull-right" style="margin-right: 15px;" ng-click="deleteCreche(creche.id)">Effacer</a>
       </div>
-    </div>
-  </div>
-
-  <!-- Menu Activities -->
-  <div ng-if="isViewMenu('activities')">
-    <div class="row with-margin-top">
-      <p><strong>TODO Configuration des activités</strong></p>
     </div>
   </div>
 

@@ -1,9 +1,19 @@
 var app = angular.module('scarecrow.controllers');
-  app.controller('ActivityCtrl', ['$scope', '$routeParams', '$location', 'apiProxy', '_', 
-    function($scope, $routeParams, $location, apiProxy) 
+  app.controller('ActivityCtrl', ['$scope', '$routeParams', '$location', 'apiProxy', 'session', '_', 
+    function($scope, $routeParams, $location, apiProxy, session, _) 
     {
-      var initialize = function() 
+      var __crecheId = $routeParams.crecheId;
+
+      var __initialize = function() 
       {
+        // get creche list et selected creche
+        apiProxy().getCreches(session().getUserEmail(),
+          function(data)
+          {
+            $scope.creches = data.creches;
+            $scope.creche = apiProxy().getCrecheById(__crecheId);
+          });
+
         if ($routeParams.edit == "edit") 
         {
           $scope.mode = "edit";
@@ -12,29 +22,30 @@ var app = angular.module('scarecrow.controllers');
         {
           $scope.mode = "view";
         }
-
-        $scope.mode = "view";
         $scope.crecheMenu = "activity";
         $scope.selectedActivity = { id: 0 };
 
-        var r = /\d+/
-          , crecheId = $routeParams.crecheId;
-
-        if (r.test(crecheId)) 
+        if (/\d+/.test(__crecheId)) 
         {
-          console.log("edit creche "+ crecheId);
-          apiProxy().getCreche(crecheId, function(data, status) 
-          {
-            $scope.creche = data.creche;
-          });
+          apiProxy().getActivities(__crecheId, 
+            function(data, status) 
+            {
+              $scope.activities = data.activities;
+            });
         }
       };
 
-      initialize();
+      __initialize();
+
+      // common function for the creche list
+      $scope.getCrecheName = function()
+      {
+        return apiProxy().getCrecheNameById(__crecheId);
+      }
 
       $scope.select = function(activity) 
       {
-        console.log(JSON.stringify(activity));
+        //console.log(JSON.stringify(activity));
         $scope.selectedActivity = activity;
       };
 
@@ -64,9 +75,6 @@ var app = angular.module('scarecrow.controllers');
         apiProxy().addOrUpdateActivity($scope.selectedActivity, 
           function(data, status) 
           {
-            $scope.creche = data.creche;
-            $scope.selectedActivity = data.activity;
-            $scope.errormessage = undefined;
             $scope.mode = "view";
           },
           function(error) 
@@ -74,7 +82,7 @@ var app = angular.module('scarecrow.controllers');
             $scope.errormessage = error; 
           })
         // TODO: save the activity
-        $location.path('/creche/' + $routeParams.crecheId + '/activity');
+        $location.path('/creche/' + __crecheId + '/activity');
       }
 
       $scope.errorIsVisible = function() 

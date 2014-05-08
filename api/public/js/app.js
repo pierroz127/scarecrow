@@ -17,6 +17,10 @@ angular.module('scarecrow', [
         templateUrl: 'views/creche/activity.html',
         controller: 'ActivityCtrl'
       })
+      .when('/creche/:crecheId/schedule', {
+        templateUrl: 'views/creche/schedule.html',
+        controller: 'ScheduleCtrl'
+      })
       .when('/creche/:sub/:crecheId?', {
         templateUrl: 'views/creche/index.html',
         controller: 'CrecheCtrl'
