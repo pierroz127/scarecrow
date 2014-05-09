@@ -24,6 +24,17 @@ var app = angular.module('scarecrow.controllers');
         }
         $scope.crecheMenu = "activity";
         $scope.selectedActivity = { id: 0 };
+        $scope.adaptations = [
+          { val: 1, label: "Facultative"},
+          { val: 2, label: "Obligatoire sauf si parent présent"},
+          { val: 3, label: "Obligatoire"}
+        ];
+        $scope.parentPresences=[
+          { val: 1, label: "Oui"},
+          { val: 2, label: "Possible"},
+          { val: 3, label: "Non"}
+        ];
+
 
         if (/\d+/.test(__crecheId)) 
         {
@@ -37,11 +48,26 @@ var app = angular.module('scarecrow.controllers');
 
       __initialize();
 
+      var __getElement = function(value, arr)
+      {
+        return _.find(arr, function(o) { return o.val === value; });
+      };
+
+      var __getElementLabel = function(value, arr)
+      {
+        var a = __getElement(value, arr);
+        if (a)
+        {
+          return a.label;
+        }
+        return '';
+      };
+
       // common function for the creche list
       $scope.getCrecheName = function()
       {
         return apiProxy().getCrecheNameById(__crecheId);
-      }
+      };
 
       $scope.select = function(activity) 
       {
@@ -49,6 +75,19 @@ var app = angular.module('scarecrow.controllers');
         $scope.selectedActivity = activity;
       };
 
+      $scope.getAdaptationLabel = function(adaptation) 
+      {
+        return __getElementLabel(adaptation, $scope.adaptations);
+      };
+
+      $scope.getParentPresenceLabel = function(parentPresence)
+      {
+        return __getElementLabel(parentPresence, $scope.parentPresences);
+      };
+
+      /*
+       * returns true if activityId is the Id of the selected activity
+       */
       $scope.isSelected = function(activityId) 
       {
         return $scope.selectedActivity.id == activityId;
@@ -62,17 +101,21 @@ var app = angular.module('scarecrow.controllers');
       $scope.edit = function() 
       {
         $scope.mode = "edit";
-      }
+      };
 
       $scope.cancel = function()
       {
         $scope.mode = "view";
         $scope.errormessage = undefined;
-      }
+      };
 
+      /*
+       * Save an activity
+       */
       $scope.save = function() 
       {
-        apiProxy().addOrUpdateActivity($scope.selectedActivity, 
+        // update the value of the adaptation property
+        apiProxy().addOrUpdateActivity($scope.selectedActivity,
           function(data, status) 
           {
             $scope.mode = "view";
@@ -83,12 +126,12 @@ var app = angular.module('scarecrow.controllers');
           })
         // TODO: save the activity
         $location.path('/creche/' + __crecheId + '/activity');
-      }
+      };
 
       $scope.errorIsVisible = function() 
       {
         return $scope.errormessage !== undefined;
-      }
+      };
     }
   ]
 );

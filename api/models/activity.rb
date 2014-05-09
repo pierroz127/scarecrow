@@ -11,6 +11,8 @@ class Activity
   property :pricing, String
   property :location, String
   property :comments, String
+  property :adaptation, Integer, required: true, default: 1 # 1: mandatory, 2: mandatory unless parent present, 3: optional
+  property :presence_of_parent, Integer, required: true, default: 1 # 1: yes, 2: possible, 3: no
 
   belongs_to :creche
   has n, :events

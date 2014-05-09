@@ -87,6 +87,26 @@
             <textarea class="form-control" ng-model="selectedActivity.comments"></textarea> 
           </div>
         </div>
+        <div class="row with-margin-top">
+          <label>Adaptation:</label>
+          <div ng-if="isReadOnly() == true">
+            <input type="text" class="form-control" value="{{getAdaptationLabel(selectedActivity.adaptation)}}" readonly></input> 
+          </div>
+          <div ng-show="isReadOnly() == false">
+            <select class="form-control" ng-model="selectedActivity.adaptation" ng-options="getAdaptationLabel(a) for a in [1, 2, 3]">
+            </select> 
+          </div>
+        </div>
+        <div class="row with-margin-top">
+          <label>Présence du Parent:</label>
+          <div ng-if="isReadOnly() == true">
+            <input type="text" class="form-control" value="{{getParentPresenceLabel(selectedActivity.presence_of_parent)}}" readonly></input> 
+          </div>
+          <div ng-show="isReadOnly() == false">
+            <select class="form-control" ng-model="selectedActivity.presence_of_parent" ng-options="getParentPresenceLabel(a) for a in [1, 2, 3]">
+            </select> 
+          </div>
+        </div>
         <div class="row with-margin-top" ng-if="errorVisible() == true">
           <div class="alert alert-danger">  
             <strong>Erreur !&nbsp;</strong>La mise  &agrave;a jour a &eacute;chou&eacute; 
