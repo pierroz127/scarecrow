@@ -32,6 +32,21 @@ angular.module('scarecrow.common.services')
         }
       };
 
+      var __resetCache = function(key)
+        {
+          if (key === undefined)
+          {
+            // reset all cache
+            __cache = {};
+          }
+          else
+          {
+            console.log('cache reset');
+            __cache[key] = undefined;
+          }
+        };
+
+
       var __doPost = function(route, data, successCallback, errorCallback) 
       {
         $http.post(apiProxyUrl + route, data).success(successCallback).error(errorCallback);
@@ -47,25 +62,16 @@ angular.module('scarecrow.common.services')
         $http.put(apiProxyUrl + route, data).success(successCallback).error(errorCallback);
       };
 
+
+
       var apiProxy = 
       {
-        resetCache: function(key)
-        {
-          if (key === undefined)
-          {
-            // reset all cache
-            __cache = {};
-          }
-          else
-          {
-            __cache[key] = undefined;
-          }
-        },
-
+        
         getCreches: function(userId, successCallback, errorCallback) 
         {
           if (__cache[CRECHES_KEY] === undefined || __cache[CRECHES_KEY].length == 0) 
           {
+            console.log('cache was empty');
             __doGet('creche/index?user='+userId, 
               function(data, status) 
               {
@@ -76,6 +82,7 @@ angular.module('scarecrow.common.services')
           }
           else
           {
+            console.log('creches were in cache');
             var data = { creches: __cache[CRECHES_KEY]};
             successCallback(data, {});
           }
@@ -125,7 +132,7 @@ angular.module('scarecrow.common.services')
           __doPost('creche/new', creche, 
             function(data, status)
             {
-              this.resetCache(CRECHES_KEY);
+              __resetCache(CRECHES_KEY);
               successCallback(data, status);
             },
             errorCallback);
@@ -136,7 +143,7 @@ angular.module('scarecrow.common.services')
           __doPut('creche/' + creche.id, creche,
             function(data, status)
             {
-              this.resetCache(CRECHES_KEY);
+              __resetCache(CRECHES_KEY);
               successCallback(data, status);
             },
             errorCallback);
@@ -147,7 +154,7 @@ angular.module('scarecrow.common.services')
           __doGet('creche/destroy/' + crecheId, 
             function(data, status)
             {
-              this.resetCache(CRECHES_KEY);
+              __resetCache(CRECHES_KEY);
               successCallback(data, status);
             }, 
             errorCallback);
