@@ -23,6 +23,7 @@ var app = angular.module('scarecrow.controllers');
 
       var initialize = function() 
       {
+        $scope.crecheMenu = 'home';
         apiProxy().getCreches(session().getUserEmail(), 
           function(data, status) 
           {
@@ -45,7 +46,7 @@ var app = angular.module('scarecrow.controllers');
             }]
           };
           $scope.openDays = [];
-          for (var i=0; i<6; i++) {
+          for (var i=0; i<5; i++) {
             $scope.openDays.push({
               day_of_week: i + 1, 
               isOpen: true, 
