@@ -15,15 +15,16 @@ app.controller('ScheduleCtrl', ['$scope', '$routeParams', '$location', '$modal',
         controller: eventInstanceCtrl,
         resolve: 
         {
+          apiProxy: function() { return apiProxy(); },
           crecheId: function() { return __crecheId; },
           activities: function() { return $scope.activities; },
+          sections: function() { return $scope.sections; },
           calEvent: function() { 
             return {
               starts_on: date,
               frequency: 0
             }; 
-          },
-          apiProxy: function() { return apiProxy(); }
+          }
         }
       });
 
@@ -55,7 +56,12 @@ app.controller('ScheduleCtrl', ['$scope', '$routeParams', '$location', '$modal',
         function(data, status)
         {
           $scope.activities = data.activities;
-        })
+        });
+      apiProxy().getSections(__crecheId,
+        function(data, status)
+        {
+          $scope.sections = data.sections;
+        });
 
       $scope.events = [];
       $scope.eventSources = [
@@ -119,10 +125,19 @@ app.controller('ScheduleCtrl', ['$scope', '$routeParams', '$location', '$modal',
   }
 ]); 
 
-var eventInstanceCtrl  = function($scope, $modalInstance, apiProxy, crecheId, activities, calEvent) 
+var eventInstanceCtrl  = function($scope, $modalInstance, apiProxy, crecheId, activities, sections, calEvent) 
 {
   $scope.calEvent = calEvent;
   $scope.activities = activities;
+  $scope.cradles = [];
+  for (var i=0; i<sections.length; i++)
+  {
+    $scope.cradles.push({
+      id: sections[i].id,
+      name: sections[i].name,
+      count: 0
+    });
+  }
   $scope.eventCreationFail = false;
 
   var convertToLocale = function(utc) 
@@ -137,7 +152,7 @@ var eventInstanceCtrl  = function($scope, $modalInstance, apiProxy, crecheId, ac
     // TODO
     $scope.calEvent.starts_on = convertToLocale($scope.calEvent.starts_on);
     console.log('event to be saved: ' + JSON.stringify($scope.calEvent));
-    apiProxy.addEvent(crecheId, activityId, $scope.calEvent, 
+    apiProxy.addEvent(crecheId, activityId, $scope.calEvent, $scope.cradles,
       function(data, status)
       {
         // TODO: data should return the new events to insert in the calendar
@@ -152,6 +167,7 @@ var eventInstanceCtrl  = function($scope, $modalInstance, apiProxy, crecheId, ac
 
   $scope.getStrTime = function(dateString) 
   {
+    console.log('getStrTime(' + dateString + ')');
     if (dateString) 
     {
       var dt = new Date(dateString);

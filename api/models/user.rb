@@ -10,6 +10,10 @@ class User
   property :lastname,        String,   :required => true
   property :hashed_password, String
   property :salt,            String
+  property :street_number, String
+  property :street, String
+  property :zipcode, Integer
+  property :city, String
   property :created_at,      DateTime  # A DateTime, for any date you might like.
 
   has n,   :sessions 

@@ -27,10 +27,13 @@ class Scarecrow < Sinatra::Application
   post '/auth/login/?' do
     puts @params
     if session = UserMapper.authenticate(@params[:email], @params[:password])
+      # TODO(pile) refactor
+      user = User.first(:email => @params[:email])
       # TODO(pile) store login info in session 
       {
         :token => session.token, 
-        :message => "LOGIN_SUCCESS"
+        :message => "LOGIN_SUCCESS",
+        :user => user
       }.to_json
     else
       status 400

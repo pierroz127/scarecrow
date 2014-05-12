@@ -8,4 +8,6 @@ class Section
 
   belongs_to :creche
 
+  has n, :available_cradles
+
 end

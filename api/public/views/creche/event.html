@@ -24,6 +24,7 @@
         </div>
       </div>
 
+
       <div class="row">
         <div class="col-md-6 no-margin">
           <div class="row">
@@ -31,7 +32,7 @@
               <label>Début: </label>
             </div>
             <div class="col-md-6 no-margin">
-              <input class="form-control" value="{{getStrTime(activity.starts_at)}}" readonly>
+              <input class="form-control" value="{{getStrTime(activity.starts_at_earliest)}}" readonly>
             </div>
           </div>
         </div>
@@ -41,14 +42,27 @@
               <label>Fin: </label>
             </div>
             <div class="col-md-6 no-margin">
-              <input class="form-control" value="{{getStrTime(activity.ends_at)}}" readonly>
+              <input class="form-control" value="{{getStrTime(activity.ends_at_latest)}}" readonly>
             </div>
           </div>
         </div>
       </div>
 
       <div class="row with-margin-top">
+        <div class="col-md-12 no-margin">
+          <label>Sections:</label>
+        </div>
+      </div>
+
+      <div class="row with-margin-top" ng-repeat="x in cradles">
         <div class="col-md-4 no-margin">
+          <span>{{x.name}}</span>
+        </div>
+        <div class="col-md-4 no-margin">
+          <input class="form-control" type="number" ng-model="x.count" min="0"> 
+        </div>
+      </div>
+        <!--<div class="col-md-4 no-margin">
           <label>Grand: </label>
           <input class="form-control" type="number" ng-model="calEvent.great_cradles" min="0"> 
         </div>
@@ -59,8 +73,7 @@
         <div class="col-md-4 no-margin">
           <label>Petit: </label>
           <input class="form-control" type="number" ng-model="calEvent.baby_cradles" min="0"> 
-        </div>
-      </div>
+        </div>-->
     </div> <!-- end of modal body -->
 
     <div class="modal-footer">

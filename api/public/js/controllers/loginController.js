@@ -25,7 +25,7 @@ angular.module('scarecrow.controllers')
       if (cookie && cookie.date && tokenIsValid(cookie.date)) {
         console.log('token present and valid');
         $scope.isAuthenticated = true;
-        $scope.user = { 'email' : cookie.email }
+        $scope.user = { email: cookie.email, id: cookie.id };
         session().set(cookie.email);
       } else {
         console.log('no valid token');
@@ -49,10 +49,12 @@ angular.module('scarecrow.controllers')
           }
         });
 
-        modalInstance.result.then(function(email) {
+        modalInstance.result.then(function(o) {
           $scope.isAuthenticated = true;
-          $scope.user.email = email;
-          session().set(email);
+          $scope.user.email = o.email;
+          $log.info('user id = ' + o.id);
+          $scope.user.id = o.id;
+          session().set(o.email);
         }, function () {
           $scope.isModal = false;
           $log.info('Modal dismissed at: ' + new Date());
@@ -91,10 +93,11 @@ var loginInstanceCtrl = function($scope, $modalInstance, http, cookieStore) {
           cookieStore.put('scarecrow_token', {
             date: new Date(),
             token: data.token,
-            email: user.email
+            email: data.user.email,
+            id: data.user.id
           });
-
-          $modalInstance.close(user.email);
+          console.log('user id = ' + data.user.id);
+          $modalInstance.close({email: data.user.email, id: data.user.id});
         })
         .error(function(data, status) {
           console.log('login failed: ' + data.message);

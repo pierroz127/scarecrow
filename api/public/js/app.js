@@ -29,6 +29,10 @@ angular.module('scarecrow', [
         templateUrl: 'views/creche/index.html',
         controller: 'CrecheCtrl'
       })
+      .when('/user/:id', {
+        templateUrl: 'views/user/profile.html',
+        controller: 'ProfileCtrl'
+      })
       .when('/', {
         templateUrl: 'views/home/home.html', 
         controller: 'HomeCtrl'})

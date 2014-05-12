@@ -30,4 +30,20 @@ describe 'event_helper spec' do
     cal_events.length.should eq(3)
     puts cal_events
   end
+
+  it 'set availability per section' do
+    creche = Creche.new({name: "event_helper_spec02", city: "paris", email: "bill@gmail.com"})
+    section = Section.new({name: "great section", min_birthdate: DateTime.new(2012,1,1), max_birthdate: DateTime.new(2012, 12, 31)})
+    creche.sections << section
+    activity = Activity.get_default_activities.first
+    event = Event.new({starts_on: DateTime.new(2014, 5, 1), frequency: 1})
+    activity.events << event
+    creche.activities << activity
+    expect(creche.save).to be_true
+    EventHelper.set_availability_per_section(event, [{id: section.id, count: 5}])
+    read_event = Event.get(event.id)
+    expect(read_event).to be_true
+    read_event.available_cradles.length.should eq(1)
+    read_event.available_cradles[0].cradles.should eq(5) 
+  end
 end

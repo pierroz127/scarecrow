@@ -10,11 +10,12 @@ class Event
   property :separation, Integer
   property :count, Integer
   property :until, DateTime
-  property :great_cradles, Integer, default: 0
-  property :medium_cradles, Integer, default: 0
-  property :baby_cradles, Integer, default: 0
-  
+#  property :great_cradles, Integer, default: 0
+#  property :medium_cradles, Integer, default: 0
+#  property :baby_cradles, Integer, default: 0
+
   belongs_to :activity
+  has n, :available_cradles
   has n, :event_recurrences
   has n, :event_cancellations
 

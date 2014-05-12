@@ -160,10 +160,10 @@ angular.module('scarecrow.common.services')
             errorCallback);
         },
 
-        addEvent: function(crecheId, activityId, calEvent, successCallback, errorCallback) 
+        addEvent: function(crecheId, activityId, calEvent, cradles, successCallback, errorCallback) 
         {
           __doPost('creche/' + crecheId + '/' + activityId + '/event/new', 
-            calEvent,
+            {event: calEvent, cradles: cradles},
             successCallback, 
             errorCallback);
         },
@@ -180,6 +180,11 @@ angular.module('scarecrow.common.services')
               successCallback(data, status);
             }, 
             errorCallback);
+        },
+
+        getSections: function(crecheId, successCallback, errorCallback)
+        {
+          __doGet('creche/' + crecheId + '/section', successCallback, errorCallback);
         },
 
         addOrUpdateActivity: function(activity, successCallback, errorCallback) 
@@ -201,6 +206,21 @@ angular.module('scarecrow.common.services')
         getCalendarEvents: function(crecheId, successCallback, errorCallback)
         {
           __doGet('creche/' + crecheId + '/event', successCallback, errorCallback);
+        },
+
+        getUser: function(userId, successCallback, errorCallback)
+        {
+          __doGet('user/' + userId, successCallback, errorCallback);
+        },
+
+        getUsers: function(successCallback, errorCallback) 
+        {
+          __doGet('user/', successCallback, errorCallback);
+        },
+
+        updateUser: function(user, successCallback, errorCallback)
+        {
+          __doPut('user/' + user.id, user, successCallback, errorCallback);
         } 
       }
 

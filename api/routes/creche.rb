@@ -78,20 +78,23 @@ class Scarecrow < Sinatra::Application
 
   post '/creche/:creche/:activity/event/new' do |cid, aid|
     puts @params
+    event_params = @params[:event]
     creche = Creche.get(cid)
     if (creche)
       activity = creche.activities.detect {|act| act.id.to_s == aid.to_s}
       if (activity)
-        Event.filter(@params)
-        event = Event.new(@params)
+        Event.filter(event_params)
+        event = Event.new(event_params)
         activity.events << event
         if (activity.save) 
+          EventHelper::set_availability_per_section(event, @params[:cradles])
           return { 
             message: 'EVENT_CREATION_SUCCESSFUL',
             cal_events: [{
-                title: "#{activity.label} (#{event.great_cradles}, #{event.medium_cradles}, #{event.baby_cradles})",
+                title: "#{activity.label} (#{EventHelper::availability_to_s(event)})",
                 allDay: true,
-                start: event.starts_on
+                start: event.starts_on, 
+                color: "#{EventHelper::get_color(activity.label)}"
               }]
           }.to_json
         end
@@ -107,6 +110,15 @@ class Scarecrow < Sinatra::Application
       { events: events }.to_json
     else
       return_error("UNKNOWN_CRECHE")
+    end
+  end
+
+  get '/creche/:id/section' do
+    creche = Creche.get(params[:id])
+    if (creche && creche.sections)
+      { sections: creche.sections }.to_json
+    else
+      return_error("CRECHE_SECTIONS_ERROR")
     end
   end
 
