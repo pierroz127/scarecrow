@@ -83,19 +83,12 @@ class Scarecrow < Sinatra::Application
     if (creche)
       activity = creche.activities.detect {|act| act.id.to_s == aid.to_s}
       if (activity)
-        Event.filter(event_params)
-        event = Event.new(event_params)
-        activity.events << event
+        event = EventHelper::create_event(activity, event_params)
         if (activity.save) 
           EventHelper::set_availability_per_section(event, @params[:cradles])
           return { 
             message: 'EVENT_CREATION_SUCCESSFUL',
-            cal_events: [{
-                title: "#{activity.label} (#{EventHelper::availability_to_s(event)})",
-                allDay: true,
-                start: event.starts_on, 
-                color: "#{EventHelper::get_color(activity.label)}"
-              }]
+            cal_events: [EventHelper::convert_to_calendar_event(activity, event)]
           }.to_json
         end
       end

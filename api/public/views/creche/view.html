@@ -1,9 +1,12 @@
 <div>
-  <div class="row">
+  <div class="row no-margin">
     <ng-include src="'/views/creche/nav.html'"></ng-include>
   </div>
-  <div ng-if="isViewMenu('home')">
-    <div class="row with-margin-top">
+  <ul class="nav nav-tabs">
+    <li class="active"><a>Coordonnées</a></li>
+    <li><a>Sections</a></li>
+  </ul>
+    <div class="row no-margin with-margin-top">
       <div class="col-lg-3 no-margin">
         <label>Type d'établissement:</label>
         <select class="form-control">
@@ -24,7 +27,7 @@
         <p>{{creche.name}}<p>
       </div>
     </div>
-    <div class="row with-margin-top">
+    <div class="row no-margin with-margin-top">
       <div class="col-lg-6 no-margin">
         <label>Adresse</label>
         <p>{{creche.number}} {{creche.street}}</p>
@@ -38,7 +41,7 @@
         <p>{{creche.city}}</p>
       </div>
     </div>
-    <div class="row with-margin-top">
+    <div class="row no-margin with-margin-top">
       <div class="col-lg-4 no-margin">
         <label>Email:</label>
         <p>{{creche.email}}</p>
@@ -52,13 +55,13 @@
         <p>{{creche.fax}}</p>
       </div>
     </div>
-    <div class="row with-margin-top">
+    <div class="row no-margin with-margin-top">
       <div class="col-lg-12 no-margin">
         <label>Pr&eacute;nom, Nom du directeur:</label>
         <p>{{creche.director_firstname}} {{creche.director_lastname}}</p>
       </div>
     </div>
-    <div class="row with-margin-top">
+    <div class="row no-margin with-margin-top">
       <div class="col-lg-12 no-margin">
         <label>Description de la structure:</label>
         <p>{{creche.description}}</p> 
@@ -66,7 +69,7 @@
     </div>
 
     <!-- configuration of the open days -->
-    <div class="row" style="margin-top: 10px;">
+    <div class="row no-margin" style="margin-top: 10px;">
       <div class="col-lg-5 no-margin">
         <label>Jours et heures d'ouverture</label>
       </div>
@@ -75,9 +78,9 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row no-margin">
       <div class="col-lg-5 no-margin">
-        <div class="row with-margin-top" ng-repeat="od in creche.open_days">
+        <div class="row no-margin with-margin-top" ng-repeat="od in creche.open_days">
           <div class="input-group col-md-12">
             <div class="open-day">
               <span class="form-control"> {{ getStrDay(od.day_of_week) }}</span>
@@ -93,7 +96,7 @@
       </div>
 
       <div class="col-lg-7 no-margin">
-        <div class="row with-margin-top">
+        <div class="row no-margin with-margin-top">
           <table>
             <thead>
               <th width="40%">Nom de la section</th>
@@ -120,11 +123,10 @@
       </div>
     </div>
 
-    <div class="row with-margin-top">
+    <div class="row no-margin with-margin-top">
       <div class="col-lg-12 no-margin">
         <a class="btn btn-md btn-primary pull-right" href="#/creche/edit/{{creche.id}}">&Eacute;diter</a>
         <a class="btn btn-md btn-primary pull-right" style="margin-right: 15px;" ng-click="deleteCreche(creche.id)">Effacer</a>
       </div>
     </div>
-  </div>
 </div>
